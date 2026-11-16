@@ -409,25 +409,53 @@ by the writer.
 
 ## Rate Limiting
 
-**My limits:** ___ per minute, ___ per day
+**My limits:** 10 per minute, 200 per day
 
 **Why those numbers and not others:**
 
-<!-- Think about two people: a real writer submitting their own work a few
-     times an hour, and a script sending a thousand variations to map your
-     thresholds. Your numbers have to be liveable for the first and hostile to
-     the second. -->
+Ten submissions per minute allows a writer to submit work and make a few
+revisions while slowing repeated automated requests. The daily limit of
+200 allows regular use while limiting sustained requests from one caller.
 
-**What a caller counts as:** <!-- per address, or per creator_id? They fail
-differently — one script can look like a thousand callers, and one household
-can look like one. -->
+**What a caller counts as:**
+
+The service uses creator_id when it is a nonempty string. Otherwise, it
+falls back to the caller's IP address. Different creators sharing an
+address can have separate limits, but a script can bypass the per-creator
+limit by changing its creator_id because these IDs are not authenticated.
+
+The counters are stored in memory, so restarting the service resets them.
 
 **The run of status codes when I pushed past it:**
 
-<!-- python run_attacks.py --flood 15 -->
+Command:
+
+```bash
+python run_attacks.py --flood 15
+```
+
+Actual output:
 
 ```text
+200 200 200 200 200 200 200 200 200 200 429 429 429 429 429
+```
 
+Ten requests succeeded and five were rate limited. The report was saved
+to results/flood_2026-11-16_0206.md.
+
+GET /log showed all five rate-limit rejections. I also submitted a request
+with no text, which returned HTTP 400 and recorded this rejection:
+
+```json
+{
+  "creator_id": "validation_tester",
+  "event": "rejected",
+  "reason": "invalid_text",
+  "route": "/submit",
+  "status": "rejected",
+  "status_code": 400,
+  "timestamp": "2026-11-16T07:09:57+00:00"
+}
 ```
 
 ---
