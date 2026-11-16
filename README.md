@@ -36,54 +36,47 @@
 
 ## What This Does
 
-<!-- The path a submission takes, from arriving to the label a reader sees.
-     Six or seven steps — this is the trace you wrote in Milestone 1. -->
-
 Provenance Guard is a local backend service that evaluates writing using two
 different signals. Its scores describe patterns in the writing, not proof of
 who wrote it.
 
-The submission path is:
+A submission follows these steps:
 
 1. A writer sends `text` and `creator_id` to `POST /submit`.
 2. The service checks the input and creates a unique `content_id`. Text must
    contain between 50 and 10,000 characters after surrounding whitespace is
    removed. The creator ID must be a nonempty string.
-3. The local model measures how predictable the writing is.
+3. A local GPT-2 model measures how predictable the writing is.
 4. The style signal measures sentence length variation, vocabulary repetition,
    and selected punctuation density.
 5. The combining function averages the two signal scores.
-6. The planned label function maps the combined score to a human, AI, or
-   unsure label.
-7. The service records the submission in the audit log and returns the ID,
+6. The label function maps the combined score to a human, AI, or unsure label.
+7. The service records the decision in the audit log and returns the ID,
    scores, guess, and label.
 
-A writer will be able to appeal using the `content_id` and an explanation.
-The planned appeal path records the explanation and changes the status to
-`under_review`. It does not automatically decide whether the writer's evidence
-is convincing.
+Writers can send their `content_id` and reasoning to `POST /appeal`.
+The explanation must contain at least 25 whitespace-separated words.
+The service checks that the submission exists, records the appeal, and
+marks it `under_review`. It does not automatically rescore the writing.
 
-**Current progress:** The submission route validates input, runs both signals,
-combines their scores using equal weights, and records all three scores in
-the audit log. Final labels and appeals are still in progress.
+Repeating the same explanation for the same submission does not add another
+appeal entry. Duplicate checking ignores capitalization and extra whitespace.
+A different explanation meeting the minimum length is saved.
+
+The audit log preserves the original decision. An appeal adds a later entry
+with the `under_review` status rather than overwriting the decision.
 
 ---
 
 ## Signals and Scoring
-
-<!-- For each signal: what property it measures, why that might differ between
-     human and AI writing, and WHAT IT CAN'T SEE.
-
-     The blind spot is not optional. If you can't name it you don't understand
-     the signal yet — and unit 8's attack set is built out of blind spots. -->
 
 ### Signal one — the model signal
 
 **What it measures:**
 
 `detector.model_signal(text)` uses the local GPT-2 model to measure how
-predictable the text is. It converts that measurement into a score from 0 to 1.
-Higher scores mean more AI-like according to this signal.
+predictable the text is. It converts that measurement into a score from
+0 to 1. Higher scores mean more AI-like according to this signal.
 
 **Why that might differ between human and AI writing:**
 
@@ -151,9 +144,6 @@ the patterns this signal treats as AI-like.
 
 ### The combining rule
 
-<!-- Write the rule in words, then give the numbers. What happens when the two
-     signals disagree? -->
-
 **The rule:**
 
 I kept the starter's equally weighted average. Both signals point in the
@@ -172,15 +162,11 @@ probability of AI authorship.
 combined_score = (0.50 × model_score) + (0.50 × style_score)
 ```
 
-The starter thresholds are:
+The label thresholds are:
 
 - Human: combined score at or below 0.35.
 - Unsure: combined score above 0.35 and below 0.65.
 - AI: combined score at or above 0.65.
-
-The combined score is connected to the submission route. The final label
-mapping is not connected yet, so the route still returns a temporary
-`unsure` guess and a placeholder label.
 
 **Where it lives:** `scoring.py::combine_signals`
 
@@ -199,7 +185,8 @@ I ran both signals separately on four calibration passages:
 | Plain human-written morning paragraph | 0.8582 | 0.6908 | 0.77450 |
 
 The combined scores in this table are calculated from the standalone results.
-They are not final labeled responses from the endpoint.
+I later confirmed the original garden and morning paragraph scores through
+the completed endpoint.
 
 The model ranked the original AI passage above my human film paragraph,
 while the style signal ranked them in the opposite order. My film paragraph
@@ -207,14 +194,14 @@ had low sentence length variation and repeated vocabulary, which increased
 its style score.
 
 With equal weights and the starter thresholds, my human film paragraph
-would receive an AI label. The original AI passage would receive an unsure
-label. This shows how the style signal can push a human submission above
-the AI threshold.
+would receive an AI label. The original AI passage receives an unsure label.
+This shows how the style signal can push a human submission above the AI
+threshold.
 
-My plain human-written morning paragraph also scored above the planned AI
-threshold. The model found its wording predictable, while the style signal
-measured very similar sentence lengths. Both signals leaned toward AI, so
-averaging them did not prevent a false positive.
+My plain human-written morning paragraph also received an AI label when
+submitted through the endpoint. The model found its wording predictable,
+while the style signal measured very similar sentence lengths. Both signals
+leaned toward AI, so averaging them did not prevent a false positive.
 
 The edited garden passage received a higher model score than the original.
 Editing does not necessarily reduce predictability. The passages also differ
@@ -227,60 +214,48 @@ They are not the full acceptance test results.
 
 ## Label Variants
 
-<!-- The exact text of all three labels, as a reader would see them, and the
-     score range each covers.
-
-     Write them for someone who has never heard the word "threshold". -->
-
-Final label wording has not been implemented yet. The ranges below are the
-planned starter settings.
-
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
-| high-confidence human | 0.00 ≤ score ≤ 0.35 | Not implemented yet. |
-| unsure | 0.35 < score < 0.65 | Not implemented yet. |
-| high-confidence AI | 0.65 ≤ score ≤ 1.00 | Not implemented yet. |
+| high-confidence human | 0.00 ≤ score ≤ 0.35 | Our automated checks suggest this writing was written by a person. These checks cannot verify authorship. |
+| unsure | 0.35 < score < 0.65 | Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision. |
+| high-confidence AI | 0.65 ≤ score ≤ 1.00 | Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision. |
 
 **Why I worded the "unsure" one this way:**
 
-<!-- It's the hardest of the three. It has to admit uncertainty without
-     sounding like an accusation, because the person reading it may well have
-     written every word themselves. -->
+The label explains that the checks could not reach a confident conclusion.
+It also says the result is not a finding of wrongdoing because uncertainty
+should not become an accusation. The appeal sentence gives the writer a
+way to challenge the result.
 
-To be completed when I write and test the final labels.
+All three labels were reached through actual submissions:
+
+| Submission | Combined score | Returned guess | Content ID |
+|---|---:|---|---|
+| Short test submission | 0.28125 | human | 53b1d580-3041-4e4b-a80c-266c38268e36 |
+| Original AI garden passage | 0.6158 | unsure | 1deabba6-27f3-4048-8e3c-090e755161a6 |
+| Human-written morning paragraph | 0.7745 | ai | b2f4fb71-e51f-4c26-9680-a2ad7989d6a0 |
+
+The AI label on my morning paragraph is a false positive. This table
+demonstrates label coverage, not accurate authorship detection.
 
 ---
 
 ## Sample Run
 
-<!-- One submission and one appeal, pasted as text: the request, the response,
-     and the log entries. -->
-
 **A submission**
 
-This is a real Milestone 4 submission with both signals connected.
-The confidence field contains their average. The guess and label are
-still placeholders.
-
-<!-- The response needs content_id, guess, confidence, label, AND both
-     signal scores - model_score and style_score. Unit 8's tools read those
-     two off the response, so leaving them out costs you next unit's
-     diagnostics. -->
-
 ```bash
-$ curl -i --max-time 120 -X POST http://127.0.0.1:5000/submit \
+$ curl -X POST http://127.0.0.1:5000/submit \
   -H "Content-Type: application/json" \
   -d '{"text": "This is a test submission to check that both signals return scores and the service combines them correctly.", "creator_id": "arely"}'
 ```
 
-HTTP status: `200 OK`
-
 ```json
 {
   "confidence": 0.28125,
-  "content_id": "d9097043-f26a-4641-9967-3551dda7dee3",
-  "guess": "unsure",
-  "label": "Both signals are connected. Final labels are not connected yet.",
+  "content_id": "53b1d580-3041-4e4b-a80c-266c38268e36",
+  "guess": "human",
+  "label": "Our automated checks suggest this writing was written by a person. These checks cannot verify authorship.",
   "model_score": 0.0625,
   "style_score": 0.5
 }
@@ -291,48 +266,112 @@ sentence, so the style signal returns its neutral fallback of 0.5.
 
 **An appeal**
 
-Not implemented or tested yet. The request, response, and resulting log
-entry will be added in Milestone 5.
+This appeal tests the endpoint behavior. The original submission received a
+human label; the appeal is not an example of correcting an AI accusation.
 
 ```bash
-$ curl -X POST http://127.0.0.1:5000/appeal \
+$ curl -i -X POST http://127.0.0.1:5000/appeal \
   -H "Content-Type: application/json" \
-  -d '{"content_id": "...", "reasoning": "..."}'
-```
-
-```json
-
-```
-
-**What the log shows afterwards**
-
-This is the actual log after the two-signal submission above, before any
-appeal.
-
-```bash
-$ curl -i "http://127.0.0.1:5000/log?limit=1"
+  -d '{"content_id": "53b1d580-3041-4e4b-a80c-266c38268e36", "reasoning": "This is a test appeal to verify that the service records a detailed explanation, links it to my submission, and marks the item for review without automatically rescoring it."}'
 ```
 
 HTTP status: `200 OK`
 
 ```json
 {
-  "count": 1,
+  "content_id": "53b1d580-3041-4e4b-a80c-266c38268e36",
+  "duplicate": false,
+  "message": "Your appeal has been recorded for review. The writing has not been automatically rescored.",
+  "status": "under_review"
+}
+```
+
+**What the log shows afterwards**
+
+```bash
+$ curl "http://127.0.0.1:5000/log?limit=2"
+```
+
+```json
+{
+  "count": 2,
   "entries": [
     {
       "combined_score": 0.28125,
-      "content_id": "d9097043-f26a-4641-9967-3551dda7dee3",
+      "content_id": "53b1d580-3041-4e4b-a80c-266c38268e36",
       "creator_id": "arely",
-      "guess": "unsure",
-      "label": "Both signals are connected. Final labels are not connected yet.",
+      "guess": "human",
+      "label": "Our automated checks suggest this writing was written by a person. These checks cannot verify authorship.",
       "model_score": 0.0625,
-      "status": "pending_scoring",
+      "status": "decided",
       "style_score": 0.5,
-      "timestamp": "2026-11-16T06:34:36+00:00"
+      "timestamp": "2026-11-16T06:42:59+00:00"
+    },
+    {
+      "content_id": "53b1d580-3041-4e4b-a80c-266c38268e36",
+      "creator_id": "arely",
+      "event": "appeal",
+      "reasoning": "This is a test appeal to verify that the service records a detailed explanation, links it to my submission, and marks the item for review without automatically rescoring it.",
+      "status": "under_review",
+      "timestamp": "2026-11-16T06:44:19+00:00"
     }
   ]
 }
 ```
+
+Additional appeal checks produced these results:
+
+| Check | Observed result |
+|---|---|
+| Repeat the same explanation for the same content ID | HTTP 200, `duplicate: true`; no additional appeal entry in the checked history |
+| Submit an explanation shorter than 25 words | HTTP 400, `reasoning_too_short` |
+| Submit a different explanation of at least 25 words for the same content ID | HTTP 200, `duplicate: false`; another appeal entry saved |
+
+The short explanation was:
+
+```json
+{
+  "content_id": "53b1d580-3041-4e4b-a80c-266c38268e36",
+  "reasoning": "I wrote this myself."
+}
+```
+
+The response was:
+
+```json
+{
+  "error": "reasoning_too_short",
+  "message": "Your explanation must contain at least 25 words."
+}
+```
+
+The second distinct explanation was:
+
+```text
+This is a second test explanation with different wording to confirm that
+additional information can be saved for the same submission while keeping
+the original appeal in the audit history.
+```
+
+Its saved log entry was:
+
+```json
+{
+  "content_id": "53b1d580-3041-4e4b-a80c-266c38268e36",
+  "creator_id": "arely",
+  "event": "appeal",
+  "reasoning": "This is a second test explanation with different wording to confirm that additional information can be saved for the same submission while keeping the original appeal in the audit history.",
+  "status": "under_review",
+  "timestamp": "2026-11-16T06:46:19+00:00"
+}
+```
+
+After these checks, the filtered history contained three entries: the
+original decision and two distinct appeals.
+
+The word minimum checks explanation length, not evidence quality. A person
+would still need to assess any drafts, notes, or other evidence described
+by the writer.
 
 ---
 
@@ -341,27 +380,28 @@ HTTP status: `200 OK`
 **Moment 1**
 
 - **What I asked for:** Help getting the submission endpoint running and
-  connecting the first signal to the audit log.
+  connecting the signals to scoring, labels, and the audit log.
 - **What came back:** A fixed JSON response to test the route first, followed
-  by code for input validation, unique content IDs, the detector call, and
-  audit logging.
-- **What I changed:** I replaced the starter's 501 response, tested the fixed
-  response, and then connected the real model signal. I checked that the
-  returned content ID matched the audit log entry.
+  by code for input validation, unique content IDs, the detector call,
+  stylometry measurements, scoring, and label mapping.
+- **What I changed:** I replaced the starter stubs in stages and ran terminal
+  checks after each stage. I tested four calibration passages and verified
+  that the endpoint returned both signal scores and their average. I recorded
+  the false-positive results instead of describing the detector as accurate.
 
 **Moment 2**
 
-- **What I asked for:** A complete version of `stylometry.py` that kept the
-  starter's layout and function names, followed by help connecting both
-  signals.
-- **What came back:** Implementations for sentence length spread, type-token
-  ratio, punctuation density, and a weighted style score. AI also provided
-  instructions for connecting the style score to the combining function and
-  audit log.
-- **What I changed:** I replaced the stub functions, tested four calibration
-  passages, and connected both signals to `/submit`. I verified that the
-  response and log contained both scores and their average. The calibration
-  results showed false-positive risks that I recorded in this README.
+- **What I asked for:** Help implementing my appeal rules: at least 25 words,
+  saving different explanations, and avoiding duplicate explanations for the
+  same submission.
+- **What came back:** An appeal function that validates the request, checks
+  for an existing submission, compares explanations, and records valid appeals.
+  AI also suggested wording for the reader-facing labels and helped draft
+  this README from my actual terminal output.
+- **What I changed:** I replaced the appeal stub and tested an initial appeal,
+  an identical repeat, a short explanation, and a different explanation.
+  I checked the audit history to confirm that the original decision and both
+  distinct appeals remained recorded.
 
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 

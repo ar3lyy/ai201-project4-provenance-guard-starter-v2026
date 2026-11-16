@@ -247,8 +247,7 @@ def submit():
     style_score = float(stylometry.style_signal(text))
     confidence = float(scoring.combine_signals(model_score, style_score))
 
-    guess = "unsure"
-    label = "Both signals are connected. Final labels are not connected yet."
+    guess, label = scoring.score_to_label(confidence)
 
     audit.log_decision(
         content_id=content_id,
@@ -258,7 +257,7 @@ def submit():
         style_score=style_score,
         combined_score=confidence,
         label=label,
-        status="pending_scoring",
+        status="decided",        
     )
 
     return jsonify({
@@ -272,33 +271,89 @@ def submit():
 
 
 @app.post("/appeal")
+@app.post("/appeal")
 def appeal():
-    """
-    A writer says you got it wrong. ← TODO — Milestone 5
+    """Record a valid appeal without repeating the same explanation."""
+    payload = request.get_json(silent=True)
 
-    Expects JSON:
-        {"content_id": "...", "reasoning": "..."}
+    if not isinstance(payload, dict):
+        return jsonify({
+            "error": "invalid_input",
+            "message": "Send a JSON object with content_id and reasoning."
+        }), 400
 
-    Should:
-      1. Check the content_id actually exists — `audit.entries_for(id)` tells
-         you. A typo here fails silently and looks like a broken endpoint,
-         which is the single most common way this milestone eats an hour.
-      2. Record the appeal with `audit.log_appeal(...)`, which moves the item
-         to `under_review`.
-      3. Confirm to the writer. No automatic re-checking needed.
+    content_id = payload.get("content_id")
+    reasoning = payload.get("reasoning")
 
-    This is the smallest endpoint in the project and the one that matters most
-    to the person on the other end. It's the only thing standing between a
-    wrong accusation and nothing at all.
-    """
-    payload = request.get_json(silent=True) or {}
+    if not isinstance(content_id, str) or not content_id.strip():
+        return jsonify({
+            "error": "invalid_content_id",
+            "message": "content_id must be a nonempty string."
+        }), 400
 
-    # TODO: delete this and build the route.
+    if not isinstance(reasoning, str) or not reasoning.strip():
+        return jsonify({
+            "error": "invalid_reasoning",
+            "message": "Please provide your appeal explanation."
+        }), 400
+
+    content_id = content_id.strip()
+    reasoning = reasoning.strip()
+
+    if len(reasoning.split()) < 25:
+        return jsonify({
+            "error": "reasoning_too_short",
+            "message": "Your explanation must contain at least 25 words."
+        }), 400
+
+    entries = audit.entries_for(content_id)
+    decisions = [
+        entry for entry in entries
+        if entry.get("event") != "appeal"
+        and "model_score" in entry
+    ]
+
+    if not decisions:
+        return jsonify({
+            "error": "content_not_found",
+            "message": "No submission exists with that content_id."
+        }), 404
+
+    normalized_reasoning = " ".join(reasoning.split()).casefold()
+
+    for entry in entries:
+        if entry.get("event") == "appeal":
+            previous_reasoning = " ".join(
+                entry.get("reasoning", "").split()
+            ).casefold()
+
+            if previous_reasoning == normalized_reasoning:
+                return jsonify({
+                    "content_id": content_id,
+                    "status": "under_review",
+                    "message": (
+                        "This explanation is already recorded. "
+                        "No duplicate appeal was saved."
+                    ),
+                    "duplicate": True,
+                }), 200
+
+    audit.log_appeal(
+        content_id=content_id,
+        creator_id=decisions[0]["creator_id"],
+        reasoning=reasoning,
+    )
+
     return jsonify({
-        "error": "not_implemented",
-        "message": "POST /appeal isn't built yet — see the TODO in app.py.",
-        "you_sent": payload,
-    }), 501
+        "content_id": content_id,
+        "status": "under_review",
+        "message": (
+            "Your appeal has been recorded for review. "
+            "The writing has not been automatically rescored."
+        ),
+        "duplicate": False,
+    }), 200
+
 
 
 # ── Already works ─────────────────────────────────────────────────────────────
