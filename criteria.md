@@ -42,63 +42,54 @@ Two things worth knowing before you pick numbers:
   a **miss**.
 
 ---
-## 1.
+## 1. No false accusations on my human-written samples
 
-<!-- Your criterion. It must name a number. -->
-
-
+Of 10 pieces I wrote myself, 0 should be labeled high-confidence AI in each of the three trials.
 
 **Why this target:**
 
+I chose zero because incorrectly labeling my writing as AI-generated could cause problems later and affect how people view my work. I want the system to leave room for uncertainty instead of making a false accusation.
 
 
 ---
 
-## 2.
+## 2. Appeals require detailed reasoning and avoid duplicates
 
-<!-- Your criterion. -->
-
-
+Across five appeal test cases in each of the three trials, the service should correctly handle all five. An appeal with at least 25 words of reasoning should be saved and change an existing submission’s status to under_review. Reasoning with fewer than 25 words should be rejected with a clear message. An identical explanation submitted again for the same content_id should not create another appeal entry, but a different explanation meeting the word minimum should be saved.
 
 **Why this target:**
 
-
+I want writers to explain why they disagree and describe supporting evidence, such as drafts or notes. Requiring at least 25 words encourages a fuller explanation, although length alone does not prove the evidence is convincing. Saving different explanations lets writers add information while avoiding repeated copies of the same appeal.
 
 ---
 
-## 3.
+## 3. Invalid submissions return clear errors
 
-<!-- Your criterion. -->
-
-
+In each of the three trials, all five invalid inputs—missing text, blank text, text with an incorrect data type, text shorter than 50 characters, and text longer than 10,000 characters—should return a clear JSON error without crashing the service. Input errors should return HTTP 400, except text over the maximum, which should return HTTP 413.
 
 **Why this target:**
 
-
+The system needs enough writing to evaluate, so I chose a minimum of 50 characters. The 10,000-character maximum limits how much text the service processes per request. Missing or invalid text should produce a message explaining what the writer needs to fix.
 
 ---
 
-## 4.
+## 4. All three labels are reachable
 
-<!-- Your criterion. -->
-
-
+Using the same set of six writing samples in each of the three trials, the results should include at least one high-confidence human label, one high-confidence AI label, and one unsure label in every trial.
 
 **Why this target:**
 
-
+All three labels should appear in actual submissions so I know the system can use each one. The unsure label matters because the system should be able to admit when it cannot confidently judge the writing.
 
 ---
 
-## 5.
+## 5. Human and AI samples have separated average scores
 
-<!-- Your criterion. -->
-
-
+Using five known human-written samples and five known AI-generated samples, the average combined score for AI-generated samples should be at least 0.25 higher than the average for human-written samples in each of the three trials.
 
 **Why this target:**
 
-
+I chose a gap of 0.25 because the scores should show a noticeable difference between the two groups. This checks whether the signals distinguish the groups on average, while my false-positive criterion separately checks for wrong accusations.
 
 ---
 
