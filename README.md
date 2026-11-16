@@ -162,11 +162,17 @@ probability of AI authorship.
 combined_score = (0.50 × model_score) + (0.50 × style_score)
 ```
 
-The label thresholds are:
+The original Unit 7 thresholds were human at or below 0.35, unsure above
+0.35 and below 0.65, and AI at or above 0.65. Those settings produced the
+before results.
+
+The current thresholds after the single Unit 8 improvement are:
 
 - Human: combined score at or below 0.35.
-- Unsure: combined score above 0.35 and below 0.65.
-- AI: combined score at or above 0.65.
+- Unsure: combined score above 0.35 and below 0.80.
+- AI: combined score at or above 0.80.
+
+Only `AI_THRESHOLD` changed, from 0.65 to 0.80. Both weights remain 0.50.
 
 **Where it lives:** `scoring.py::combine_signals`
 
@@ -217,8 +223,8 @@ They are not the full acceptance test results.
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
 | high-confidence human | 0.00 ≤ score ≤ 0.35 | Our automated checks suggest this writing was written by a person. These checks cannot verify authorship. |
-| unsure | 0.35 < score < 0.65 | Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision. |
-| high-confidence AI | 0.65 ≤ score ≤ 1.00 | Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision. |
+| unsure | 0.35 < score < 0.80 | Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision. |
+| high-confidence AI | 0.80 ≤ score ≤ 1.00 | Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision. |
 
 **Why I worded the "unsure" one this way:**
 
@@ -227,7 +233,8 @@ It also says the result is not a finding of wrongdoing because uncertainty
 should not become an accusation. The appeal sentence gives the writer a
 way to challenge the result.
 
-All three labels were reached through actual submissions:
+The ranges above describe the current code. The wording did not change.
+The following Unit 7 submissions used the original AI threshold of 0.65:
 
 | Submission | Combined score | Returned guess | Content ID |
 |---|---:|---|---|
@@ -236,7 +243,11 @@ All three labels were reached through actual submissions:
 | Human-written morning paragraph | 0.7745 | ai | b2f4fb71-e51f-4c26-9680-a2ad7989d6a0 |
 
 The AI label on my morning paragraph is a false positive. This table
-demonstrates label coverage, not accurate authorship detection.
+demonstrates historical label coverage, not accurate authorship detection.
+After the threshold change, the morning paragraph receives unsure. All three
+labels remain reachable across the wider tested inputs: EV10 still receives
+AI at 0.84305. However, the original fixed six-sample coverage criterion now
+misses because those six inputs contain no score at or above 0.80.
 
 ---
 
@@ -403,7 +414,7 @@ by the writer.
   I checked the audit history to confirm that the original decision and both
   distinct appeals remained recorded.
 
-### Unit 8 AI assistance so far
+### Unit 8 AI assistance
 
 I asked AI to help with rejection logging, testing, and the write-up. It
 provided code that logs existing input errors without changing their acceptance
@@ -418,6 +429,13 @@ outcomes; they are not evidence of paired causal effects. The human samples
 are limited to one essay, and no claim of general detector accuracy follows
 from them. The runner uses fresh test creator IDs, so its criterion results
 are separate from the flood test.
+
+For the improvement, AI suggested raising only the AI threshold to 0.80
+because avoiding false accusations was my priority. I made that change and
+ran both test commands locally. AI compared the uploaded before and after
+reports and helped write the measured tradeoff, including the newly missed
+coverage target and unchanged score-gap miss. No after result was filled in
+before the actual run.
 
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 
@@ -1334,31 +1352,323 @@ alone does not isolate validation of an object-valued creator ID.
 
 **What I changed:**
 
-Not implemented yet. The before measurements above were collected without
-changing signals, weights, thresholds, or labels.
+I changed only `config.py::AI_THRESHOLD` from 0.65 to 0.80. The human threshold
+stayed at 0.35, and both signal weights stayed at 0.50. Signal calculations,
+label wording, acceptance criteria, evaluation samples, and validation rules
+were unchanged. I restarted the service and ran the same attack set and all
+five criteria again.
 
 **Which diagnosis pointed at it:**
 
+FP02–FP07 were human samples with combined scores of 0.67500–0.73085.
+The 0.65 cutoff turned those scores into AI labels. Raising the cutoff
+prioritizes avoiding wrong accusations, which was my main concern when
+setting the criteria. It does not repair the underlying signal weaknesses
+or increase the average score gap. The threshold was chosen after inspecting
+the before results, so this is an improvement on the measured set, not an
+independent validation of general performance.
+
 ### Attack Run — After
 
-<!-- Same format. `run_attacks.py --label after` -->
+Command: `python run_attacks.py --set attack_set --label after`
+
+Source: `results/attack_run_2026-11-16_0240_after.md`, produced by
+`run_attacks.py::main`. All 56 attacks ran. The assessment rules are the same
+as in Attack Run — Before. No 5xx or request failures were observed.
+
+Assessment totals: **46 HELD, 10 BROKE**, compared with
+37 HELD and 19 BROKE before. These counts depend on the stated assessment
+rules and are not a general accuracy estimate.
+
+| ID | Family | Targeting | Status | Content ID | Guess | Score | Verdict |
+|---|---|---|---|---|---|---|---|
+| EV01 | evasion | signal two: typos raise word variety | 200 | `3f989115-7abd-4d32-8b1a-4cd9a1577e42` | unsure | 0.397 | BROKE |
+| EV02 | evasion | signal two: broken-up sentences raise length spread | 200 | `1654b101-3516-4735-ad16-24f27566252a` | unsure | 0.448 | BROKE |
+| EV03 | evasion | signal two: a pasted quotation changes the shape | 200 | `19c8ad35-471c-4b08-aeb1-94b92c9423f4` | unsure | 0.578 | BROKE |
+| EV04 | evasion | signal one: unusual words raise perplexity | 200 | `de85c1a2-0a90-4838-8102-0a5692fde9f5` | unsure | 0.614 | BROKE |
+| EV05 | evasion | both signals: heavy human editing pass | 200 | `7b85ddd2-b10c-42ea-adb1-987bde00df72` | human | 0.340 | BROKE |
+| EV06 | evasion | signal two: one very long sentence and one very short | 200 | `ec7fc86c-f3b4-4061-8c07-f110418c3e2a` | unsure | 0.413 | BROKE |
+| EV07 | evasion | signal two: padding with punctuation | 200 | `b2181a3e-1727-49c1-9188-45519c75c6cd` | unsure | 0.543 | BROKE |
+| EV08 | evasion | signal one: text below the token window | 200 | `ab233903-c184-4dec-9821-47a9cb7f539e` | unsure | 0.373 | BROKE |
+| EV09 | evasion | both: AI text with a human opening paragraph bolted on | 200 | `a802ad1a-d291-4652-abca-ab5857d2a4d1` | unsure | 0.591 | BROKE |
+| EV10 | evasion | signal two: repeated stanza structure | 200 | `6d211277-6eb2-43a2-ab70-7351730c83c0` | ai | 0.843 | HELD |
+| FP01 | false_positive | plain, clear human writing with no flourishes | 200 | `57cfbcd5-de7b-43ec-be22-6a4e74c2f60d` | unsure | 0.579 | HELD |
+| FP02 | false_positive | human writing in a formal register | 200 | `2998dbc0-a4d3-4a64-9332-d411b464a59a` | unsure | 0.698 | HELD |
+| FP03 | false_positive | a non-native English speaker writing carefully | 200 | `d76f6cd7-9ba9-448e-8e7f-11498cdc43b1` | unsure | 0.712 | HELD |
+| FP04 | false_positive | a student essay written to a rubric | 200 | `728bb8f0-23cd-48f7-bac6-2cbae895ae58` | unsure | 0.698 | HELD |
+| FP05 | false_positive | technical documentation written by a person | 200 | `ea676843-afeb-4cec-9475-93a621f1d417` | unsure | 0.731 | HELD |
+| FP06 | false_positive | a person imitating a formal template | 200 | `43ab9ac4-f899-4433-a3e0-ad100f036cd4` | unsure | 0.694 | HELD |
+| FP07 | false_positive | human writing that repeats a phrase deliberately | 200 | `73f0487b-3430-426e-92d8-154209d07b9b` | unsure | 0.675 | HELD |
+| FP08 | false_positive | very short genuine human submission | 400 | `—` | — | — | HELD |
+| PI01 | prompt_injection | instruction to ignore the check | 200 | `9de94349-0e9e-4e09-b519-4eeb27230c5c` | unsure | 0.426 | HELD |
+| PI02 | prompt_injection | instruction disguised as a system message | 200 | `4d6ebf0e-3de1-499d-b388-fe9475c32012` | human | 0.282 | BROKE |
+| PI03 | prompt_injection | instruction wrapped in the writer's voice | 200 | `e12d755b-d008-4fde-af4f-f1a1a1992614` | unsure | 0.556 | HELD |
+| PI04 | prompt_injection | attempt to make the label text hostile | 200 | `f4e8a89a-9fac-4f2b-a42a-90d5f5bffd32` | unsure | 0.486 | HELD |
+| PI05 | prompt_injection | attempt to inject into the audit log | 200 | `a82f7f69-7b45-4c22-8a1b-9688b1c4ab40` | unsure | 0.493 | HELD |
+| PI06 | prompt_injection | instruction plus real human text | 200 | `373a5d51-61c1-4339-906c-49f12e2b676b` | unsure | 0.553 | HELD |
+| MF01 | malformed | text is only whitespace | 400 | `—` | — | — | HELD |
+| MF02 | malformed | text is a single character | 400 | `—` | — | — | HELD |
+| MF03 | malformed | text is control characters | 400 | `—` | — | — | HELD |
+| MF04 | malformed | text is only punctuation | 400 | `—` | — | — | HELD |
+| MF05 | malformed | text is a very long single word | 200 | `36022526-ac85-46fe-b976-eb3a6e14a784` | unsure | 0.749 | HELD |
+| MF06 | malformed | text is emoji only | 200 | `b7415c48-5133-44d0-8f2d-172023c19a6d` | unsure | 0.748 | HELD |
+| MF07 | malformed | text is right-to-left script | 200 | `a61e94e7-a54a-4e8e-a199-b9ebc1bfdc05` | unsure | 0.703 | HELD |
+| MF08 | malformed | text is 60,000 characters | 413 | `—` | — | — | HELD |
+| RQ01 | malformed | no text field at all | 400 | `—` | — | — | HELD |
+| RQ02 | malformed | no creator_id | 400 | `—` | — | — | HELD |
+| RQ03 | malformed | text is a number | 400 | `—` | — | — | HELD |
+| RQ04 | malformed | text is a list | 400 | `—` | — | — | HELD |
+| RQ05 | malformed | text is null | 400 | `—` | — | — | HELD |
+| RQ06 | malformed | creator_id is an object | 400 | `—` | — | — | HELD |
+| RQ07 | malformed | body is a JSON array, not an object | 400 | `—` | — | — | HELD |
+| RQ08 | malformed | body is unparseable JSON | 400 | `—` | — | — | HELD |
+| RQ09 | malformed | body is empty | 400 | `—` | — | — | HELD |
+| RQ10 | malformed | body is form-encoded, not JSON | 400 | `—` | — | — | HELD |
+| RQ11 | malformed | body is JSON claiming to be plain text | 400 | `—` | — | — | HELD |
+| RQ12 | malformed | deeply nested JSON | 400 | `—` | — | — | HELD |
+| FL01_01 | flood_same_creator | 20 rapid submissions from one creator | 200 | `609b589b-1f7f-4f7a-916a-855e5e4fb1aa` | human | 0.264 | HELD |
+| FL01_02 | flood_same_creator | 20 rapid submissions from one creator | 200 | `4463266f-cf38-45a5-ab17-b93dbfdff743` | human | 0.264 | HELD |
+| FL01_03 | flood_same_creator | 20 rapid submissions from one creator | 200 | `2e3b1a60-9e06-49f7-9405-b352ccd4caba` | human | 0.264 | HELD |
+| FL01_04 | flood_same_creator | 20 rapid submissions from one creator | 200 | `8edcbc49-5b50-4d99-891f-85f4a0233e36` | human | 0.264 | HELD |
+| FL01_05 | flood_same_creator | 20 rapid submissions from one creator | 200 | `6166390e-84fc-44df-a713-1330e08b1365` | human | 0.264 | HELD |
+| FL01_06 | flood_same_creator | 20 rapid submissions from one creator | 200 | `799494e0-ba02-4787-a5da-7e53002ccf4a` | human | 0.264 | HELD |
+| FL01_07 | flood_same_creator | 20 rapid submissions from one creator | 200 | `81c1e1d5-0728-4937-8a5f-2e859795febf` | human | 0.264 | HELD |
+| FL01_08 | flood_same_creator | 20 rapid submissions from one creator | 200 | `1b26d3e3-71f3-4019-adb6-7af904c6ae52` | human | 0.264 | HELD |
+| FL01_09 | flood_same_creator | 20 rapid submissions from one creator | 200 | `2f61b532-964a-491d-a124-1fa7e096db8c` | human | 0.264 | HELD |
+| FL01_10 | flood_same_creator | 20 rapid submissions from one creator | 200 | `1ff070f3-8e6a-4927-8e53-94e08d15bd8e` | human | 0.264 | HELD |
+| FL01_11 | flood_same_creator | 20 rapid submissions from one creator | 429 | `—` | — | — | HELD |
+| FL01_12 | flood_same_creator | 20 rapid submissions from one creator | 429 | `—` | — | — | HELD |
+
+**Before and after, side by side**
+
+| Measure | Before | After |
+|---|---|---|
+| Attack assessments | 37 HELD / 19 BROKE | 46 HELD / 10 BROKE |
+| FP02–FP07: human samples labeled AI | 6 | 0; all became unsure |
+| FP01 | unsure | unsure |
+| FP08 | 400 for short text | 400 for short text |
+| Evasion rows | 1 AI, 8 unsure, 1 human | 1 AI, 8 unsure, 1 human |
+| PI02 | human at 0.2816 | human at 0.2816 |
+| MF05–MF07 | 3 AI labels | 3 unsure labels |
+| RQ01–RQ12 | All 400 | All 400 |
+| Flood rows | 10 accepted, then 2 rejected with 429 | 10 accepted, then 2 rejected with 429 |
+| Observed server crashes | 0 | 0 |
+
+I compared the report details by attack ID. All 56 HTTP statuses, model scores,
+style scores, and combined scores were identical before and after. Only the
+nine expected guesses and labels changed: FP02–FP07 and MF05–MF07. This is
+consistent with changing only a label threshold.
+
+**Five criteria after the change — three trials each**
+
+Produced by `run_eval.py::main`, `evaluate`, and `appeal_test`.
+
+| Criterion | Original target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. Human false positives | 0/10 AI labels, all 10 accepted | 0/10 AI; 10/10 accepted | 0/10 AI; 10/10 accepted | 0/10 AI; 10/10 accepted | MET |
+| 2. Appeal rules | 5/5 cases handled correctly | 5/5 | 5/5 | 5/5 | MET |
+| 3. Invalid submissions | 5/5 correct JSON errors | 5/5; service alive=True | 5/5; service alive=True | 5/5; service alive=True | MET |
+| 4. Label coverage | 3/3 labels across six samples | 2/3 labels; 6/6 accepted | 2/3 labels; 6/6 accepted | 2/3 labels; 6/6 accepted | MISSED |
+| 5. Average score spread | AI mean minus human mean >= 0.25 | gap=0.07393 | gap=0.07393 | gap=0.07393 | MISSED |
+
+| Criterion | Before verdict | After verdict | Reason |
+|---|---|---|---|
+| 1. Human false positives | MET | MET | The ten essay excerpts stayed unsure, with zero AI labels. |
+| 2. Appeal rules | MET | MET | All five cases passed in each trial, including log checks. |
+| 3. Invalid submissions | MET | MET | All five errors matched, and the service remained running. |
+| 4. Label coverage | MET | MISSED | None of the fixed six samples reaches the new AI cutoff. |
+| 5. Average score spread | MISSED | MISSED | The score gap remains 0.07393; thresholds do not change scores. |
+
+**Actual after output — Trial 1 for each criterion**
+
+Source: `results/run_2026-11-16_024035_after.json`. Trial summaries below
+are copied from that file; the full three-trial request/response evidence is
+saved in both after evaluation reports.
+
+#### Criterion 1
+
+```json
+{
+  "met": true,
+  "measure": "0/10 AI; 10/10 accepted",
+  "false_positives": 0,
+  "accepted": 10,
+  "trial": 1
+}
+```
+
+#### Criterion 2
+
+```json
+{
+  "met": true,
+  "measure": "5/5",
+  "cases": [
+    {
+      "case": "initial detailed explanation",
+      "met": true,
+      "status": 200,
+      "before_entries": 1,
+      "after_entries": 2
+    },
+    {
+      "case": "duplicate explanation",
+      "met": true,
+      "status": 200,
+      "before_entries": 2,
+      "after_entries": 2
+    },
+    {
+      "case": "short explanation",
+      "met": true,
+      "status": 400,
+      "before_entries": 2,
+      "after_entries": 2
+    },
+    {
+      "case": "different detailed explanation",
+      "met": true,
+      "status": 200,
+      "before_entries": 2,
+      "after_entries": 3
+    },
+    {
+      "case": "unknown content ID",
+      "met": true,
+      "status": 404,
+      "before_entries": 0,
+      "after_entries": 0
+    }
+  ],
+  "trial": 1
+}
+```
+
+#### Criterion 3
+
+```json
+{
+  "met": true,
+  "measure": "5/5; service alive=True",
+  "cases": [
+    {
+      "case": "missing text",
+      "met": true,
+      "status": 400
+    },
+    {
+      "case": "blank text",
+      "met": true,
+      "status": 400
+    },
+    {
+      "case": "wrong type",
+      "met": true,
+      "status": 400
+    },
+    {
+      "case": "short text",
+      "met": true,
+      "status": 400
+    },
+    {
+      "case": "long text",
+      "met": true,
+      "status": 413
+    }
+  ],
+  "service_alive": true,
+  "trial": 1
+}
+```
+
+#### Criterion 4
+
+```json
+{
+  "met": false,
+  "measure": "2/3 labels; 6/6 accepted",
+  "labels": [
+    "human",
+    "unsure"
+  ],
+  "trial": 1
+}
+```
+
+#### Criterion 5
+
+```json
+{
+  "met": false,
+  "measure": "gap=0.07393",
+  "human_scores": [
+    0.5468999999999999,
+    0.5549,
+    0.5868,
+    0.51585,
+    0.4921
+  ],
+  "ai_scores": [
+    0.6158,
+    0.6543,
+    0.6246499999999999,
+    0.5837,
+    0.58775
+  ],
+  "human_mean": 0.53931,
+  "ai_mean": 0.61324,
+  "gap": 0.07393000000000005,
+  "trial": 1
+}
+```
 
 **Did it help, and how do I know:**
 
-<!-- Widening the unsure band usually fixes one problem and creates another.
-     Reporting that trade honestly is worth full credit. -->
+It helped reduce false accusations in the staff set: six human samples that
+previously received AI labels now receive unsure. It also removed confident
+AI labels from the repeated-character, emoji-only, and Arabic inputs, although
+those inputs still reach the scoring pipeline.
+
+The cost is visible in criterion 4: only human and unsure appear in the same
+six coverage samples after the change. For example, the known AI library
+passage at 0.6543 changed from AI to unsure. My human morning paragraph at
+0.7745 also changed from AI to unsure. Thus the wider unsure range avoids a
+wrong accusation and also withholds a previously correct AI label. The ten
+staff evasion outcomes did not change, and EV10 at 0.84305 still demonstrates
+that the AI label is reachable elsewhere.
+
+The improvement does not solve criterion 5. Human and AI means are still
+0.53931 and 0.61324. I kept the original 0.25 target and recorded the miss.
 
 ---
 
 ## What's Still Broken
 
-<!-- For each attack still getting through and each criterion still missed:
-     what you'd do, and why you stopped. -->
+| Remaining issue | Stage and mechanism | What I would do next |
+|---|---|---|
+| EV01–EV04 and EV06–EV09 remain unsure | Signal scores stay below the AI cutoff; neutral style fallbacks and disagreement reduce confidence. This is still partial evasion under the unchanged assessment rule. | Test paired original/modified passages to isolate how typos, sentence changes, quotations, and wording affect each component, then validate any revised signal on separate data. |
+| EV05 still receives human | Both signals score the edited text as human-like; neither establishes creation history. | Treat the label as tentative and investigate process evidence or provenance rather than claim a detector can prove authorship. |
+| PI02 still receives human | The text scores 0.2816 from its measured patterns. The requested classification occurs, but this does not demonstrate execution of its fake system instruction. | Add paired controls with and without the instruction to distinguish a scoring weakness from instruction-following claims. |
+| Criterion 4 now misses | Label mapping requires at least 0.80, above every score in the original six-sample set. | Keep the MISSED verdict. Use a separate exploratory coverage set later without replacing or retroactively passing the original fixed test. |
+| Criterion 5 still misses | Style averages barely separate the two groups; equal weighting reduces the model's limited separation. Threshold changes cannot alter the gap. | Examine the style features and weights using more diverse, length-matched data and a separate held-out set. A model-only gap of 0.14888 still misses 0.25 here. |
+| MF05 and MF06 still return scored judgments, now unsure | Type and length validation do not establish that the input contains usable prose. The style fallback is 0.5. | Add explicit insufficient-evidence handling and test repeated-character and emoji-only inputs. |
+| MF07 now receives unsure, but language support is unresolved | Arabic words are not recognized by the style tokenizer; the model has not been validated here for this language. | Test language-appropriate tokenization and evaluation, and abstain from unsupported authorship judgments. Arabic itself is not invalid input. |
+| FP08 is still rejected | The 50-character minimum excludes a genuine short human submission. | Consider accepting short work with an insufficient-evidence message instead of applying an authorship label. |
+| Rate limits can be bypassed or reset | Creator IDs are caller-supplied and counters are in memory. | Use authenticated identities and persistent counters if deployed. |
+| Appeal detail is only approximated by word count | Twenty-five words can still contain weak or repetitive claims. | Provide a real human review workflow and assess the evidence itself. |
+| Evaluation generalization is limited | Human excerpts share one essay and include quotations; AI and human lengths/topics are unmatched. Coverage includes calibration examples. | Add writing from different tasks and topics with recorded provenance and a separately held-out evaluation set. |
+
+I stopped after the one threshold change so that the before and after remain
+comparable and the effect of that change can be identified. The other possible
+fixes above were not implemented during this measurement.
 
 **The trade I'd make if this ran for real:**
 
-<!-- Two sentences. Fewer wrong accusations means more AI text getting through.
-     Say which way you'd go and WHO PAYS FOR IT. -->
+I would favor fewer wrong accusations and allow more writing to remain unsure,
+with a meaningful appeal and human review process. The site would bear more
+review work and miss some AI-generated writing, rather than making real writers
+bear the cost of an automated accusation.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
