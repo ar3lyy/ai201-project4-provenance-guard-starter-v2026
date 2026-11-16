@@ -403,6 +403,22 @@ by the writer.
   I checked the audit history to confirm that the original decision and both
   distinct appeals remained recorded.
 
+### Unit 8 AI assistance so far
+
+I asked AI to help with rejection logging, testing, and the write-up. It
+provided code that logs existing input errors without changing their acceptance
+rules. I ran the flood and malformed-input checks locally and supplied the
+actual output. AI also split my uploaded essay into ten unchanged excerpts,
+generated five identified AI samples, and extended the evaluation runner to
+measure my existing criteria, including appeals and log changes.
+
+AI helped draft the attack assessment rules and diagnoses by comparing my
+actual report and log entries. These are interpretations of the recorded
+outcomes; they are not evidence of paired causal effects. The human samples
+are limited to one essay, and no claim of general detector accuracy follows
+from them. The runner uses fresh test creator IDs, so its criterion results
+are separate from the flood test.
+
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 
 ---
@@ -462,62 +478,864 @@ with no text, which returned HTTP 400 and recorded this rejection:
 
 ## Attack Run — Before
 
-<!-- Every attack with its outcome and a held-or-broke mark.
-     `run_attacks.py --label before` produces the table. -->
+Command: `python run_attacks.py --set attack_set --label before`
+
+All 56 inputs completed. There were no observed 5xx responses or request
+failures. The original report left every verdict blank; zero automatically
+marked failures did not mean zero substantive failures.
+
+### Assessment rules
+
+HELD/BROKE describes whether the defense met the stated check below. These
+rules are used consistently for the before and after runs. They are separate
+from my five original acceptance criteria.
+
+- Evasion: HELD requires an AI label. An unsure result is marked BROKE for
+  detection, but is a partial evasion rather than a confident human judgment.
+- False positives: an AI label is BROKE. Unsure avoids the accusation. FP08 is
+  HELD only for the configured input rule: it was rejected for being under
+  50 characters. That rejection still blocks legitimate short writing.
+- Injection: check the attempted output or log manipulation. A requested human
+  outcome counts as BROKE when returned, without claiming the model obeyed an
+  instruction. Fixed safe labels and an unmodified structured log count as HELD.
+- Malformed requests: appropriate JSON errors without crashes are HELD.
+  Confident authorship judgments on repeated-character or emoji-only inputs
+  are BROKE. MF07 is valid Arabic text: its confident AI judgment is marked
+  BROKE for unsupported-language handling, not because Arabic should be rejected
+  or because this test establishes its true authorship.
+- Flood: the first ten accepted requests and the following 429 responses are
+  HELD under the configured 10-per-minute policy. The supplied file contains
+  12 flood rows, although its targeting description says 20.
+
+Assessment totals: **37 HELD, 19 BROKE** under these rules.
+
+| ID | Family | Targeting | Status | Content ID | Guess | Score | Verdict |
+|---|---|---|---|---|---|---|---|
+| EV01 | evasion | signal two: typos raise word variety | 200 | `b3810c1a-a8ac-4000-bb6f-f2360bf24f95` | unsure | 0.397 | BROKE |
+| EV02 | evasion | signal two: broken-up sentences raise length spread | 200 | `5096a5bb-4de2-40b6-935c-aa397154c885` | unsure | 0.448 | BROKE |
+| EV03 | evasion | signal two: a pasted quotation changes the shape | 200 | `68c33533-9e80-44bc-8457-24d41f428bbd` | unsure | 0.578 | BROKE |
+| EV04 | evasion | signal one: unusual words raise perplexity | 200 | `86f4437d-df12-4f53-b285-4796d6a0e7a5` | unsure | 0.614 | BROKE |
+| EV05 | evasion | both signals: heavy human editing pass | 200 | `35c4ccf4-e314-4ec1-9a61-5171134544fb` | human | 0.340 | BROKE |
+| EV06 | evasion | signal two: one very long sentence and one very short | 200 | `078ec5ba-7ed8-4673-87b3-55c5f65e8186` | unsure | 0.413 | BROKE |
+| EV07 | evasion | signal two: padding with punctuation | 200 | `50dbeb4a-3bad-4734-8bbc-ca32b2038f92` | unsure | 0.543 | BROKE |
+| EV08 | evasion | signal one: text below the token window | 200 | `a05bcf52-77a2-4d18-9fea-60062262883a` | unsure | 0.373 | BROKE |
+| EV09 | evasion | both: AI text with a human opening paragraph bolted on | 200 | `4e72f681-b9ef-4555-9424-1fd502d49260` | unsure | 0.591 | BROKE |
+| EV10 | evasion | signal two: repeated stanza structure | 200 | `df4f9920-0a25-46b6-9705-c572c00e5fc2` | ai | 0.843 | HELD |
+| FP01 | false_positive | plain, clear human writing with no flourishes | 200 | `61c6cfd8-e7aa-4beb-9392-c640e9ee7ba2` | unsure | 0.579 | HELD |
+| FP02 | false_positive | human writing in a formal register | 200 | `b5015d1c-b57a-4399-8cc9-75adb1ba9f94` | ai | 0.698 | BROKE |
+| FP03 | false_positive | a non-native English speaker writing carefully | 200 | `53117377-ba35-4662-9df5-5c00ca047981` | ai | 0.712 | BROKE |
+| FP04 | false_positive | a student essay written to a rubric | 200 | `756d529c-7bb4-4cbb-8b30-cb622627379d` | ai | 0.698 | BROKE |
+| FP05 | false_positive | technical documentation written by a person | 200 | `b6dc5863-d43b-4b4f-8c09-83ec5ad1759e` | ai | 0.731 | BROKE |
+| FP06 | false_positive | a person imitating a formal template | 200 | `5eca2a25-171c-4d54-bb08-31d8ff803c95` | ai | 0.694 | BROKE |
+| FP07 | false_positive | human writing that repeats a phrase deliberately | 200 | `5f5c107e-f889-40e3-96c5-e48127a6bb5b` | ai | 0.675 | BROKE |
+| FP08 | false_positive | very short genuine human submission | 400 | `—` | — | — | HELD |
+| PI01 | prompt_injection | instruction to ignore the check | 200 | `82bf1934-f4ff-4397-8090-152b1f4cea47` | unsure | 0.426 | HELD |
+| PI02 | prompt_injection | instruction disguised as a system message | 200 | `8513e4a0-bc7e-47e0-abcd-15213c689a83` | human | 0.282 | BROKE |
+| PI03 | prompt_injection | instruction wrapped in the writer's voice | 200 | `5b16daae-5327-4c4d-baa5-8ae1ffeaa724` | unsure | 0.556 | HELD |
+| PI04 | prompt_injection | attempt to make the label text hostile | 200 | `840e16ad-f8a2-439d-8d34-a151b9b408f5` | unsure | 0.486 | HELD |
+| PI05 | prompt_injection | attempt to inject into the audit log | 200 | `092fd0ce-53e9-40ec-9879-f177531e1841` | unsure | 0.493 | HELD |
+| PI06 | prompt_injection | instruction plus real human text | 200 | `edf18a0e-9c34-4807-8cd2-6a401afbccdd` | unsure | 0.553 | HELD |
+| MF01 | malformed | text is only whitespace | 400 | `—` | — | — | HELD |
+| MF02 | malformed | text is a single character | 400 | `—` | — | — | HELD |
+| MF03 | malformed | text is control characters | 400 | `—` | — | — | HELD |
+| MF04 | malformed | text is only punctuation | 400 | `—` | — | — | HELD |
+| MF05 | malformed | text is a very long single word | 200 | `20fcfcee-e1c5-493b-8886-dbe6c25f1805` | ai | 0.749 | BROKE |
+| MF06 | malformed | text is emoji only | 200 | `c40bbc86-1fb0-4d1e-a1c9-ffc442e388d6` | ai | 0.748 | BROKE |
+| MF07 | malformed | text is right-to-left script | 200 | `28afc9d0-d48b-4368-9d96-2c053f19cb2f` | ai | 0.703 | BROKE |
+| MF08 | malformed | text is 60,000 characters | 413 | `—` | — | — | HELD |
+| RQ01 | malformed | no text field at all | 400 | `—` | — | — | HELD |
+| RQ02 | malformed | no creator_id | 400 | `—` | — | — | HELD |
+| RQ03 | malformed | text is a number | 400 | `—` | — | — | HELD |
+| RQ04 | malformed | text is a list | 400 | `—` | — | — | HELD |
+| RQ05 | malformed | text is null | 400 | `—` | — | — | HELD |
+| RQ06 | malformed | creator_id is an object | 400 | `—` | — | — | HELD |
+| RQ07 | malformed | body is a JSON array, not an object | 400 | `—` | — | — | HELD |
+| RQ08 | malformed | body is unparseable JSON | 400 | `—` | — | — | HELD |
+| RQ09 | malformed | body is empty | 400 | `—` | — | — | HELD |
+| RQ10 | malformed | body is form-encoded, not JSON | 400 | `—` | — | — | HELD |
+| RQ11 | malformed | body is JSON claiming to be plain text | 400 | `—` | — | — | HELD |
+| RQ12 | malformed | deeply nested JSON | 400 | `—` | — | — | HELD |
+| FL01_01 | flood_same_creator | 20 rapid submissions from one creator | 200 | `d3c1fbe2-0157-44c7-8380-4bea240c71ae` | human | 0.264 | HELD |
+| FL01_02 | flood_same_creator | 20 rapid submissions from one creator | 200 | `da61cb3e-88b7-4938-95cb-80b3a3ff3789` | human | 0.264 | HELD |
+| FL01_03 | flood_same_creator | 20 rapid submissions from one creator | 200 | `cfbe517d-48e2-44ef-8db3-246a4f28d430` | human | 0.264 | HELD |
+| FL01_04 | flood_same_creator | 20 rapid submissions from one creator | 200 | `a6c4baf4-9ad4-457a-a1a0-ceee92d25976` | human | 0.264 | HELD |
+| FL01_05 | flood_same_creator | 20 rapid submissions from one creator | 200 | `2c4302af-7a0a-40bd-a1dc-9bbd919b1ce7` | human | 0.264 | HELD |
+| FL01_06 | flood_same_creator | 20 rapid submissions from one creator | 200 | `3baddf03-a070-4a54-b56d-4c7c89d1382f` | human | 0.264 | HELD |
+| FL01_07 | flood_same_creator | 20 rapid submissions from one creator | 200 | `b574bdb1-d4e3-4014-a10a-9123c6653578` | human | 0.264 | HELD |
+| FL01_08 | flood_same_creator | 20 rapid submissions from one creator | 200 | `2cc5c735-33db-4e5f-b1df-fade5934f6f3` | human | 0.264 | HELD |
+| FL01_09 | flood_same_creator | 20 rapid submissions from one creator | 200 | `566a7447-3a4c-4e3d-8058-52221486ffaf` | human | 0.264 | HELD |
+| FL01_10 | flood_same_creator | 20 rapid submissions from one creator | 200 | `235db0aa-e399-41d7-80d2-11c235d8eed5` | human | 0.264 | HELD |
+| FL01_11 | flood_same_creator | 20 rapid submissions from one creator | 429 | `—` | — | — | HELD |
+| FL01_12 | flood_same_creator | 20 rapid submissions from one creator | 429 | `—` | — | — | HELD |
 
 **Ten audit log entries from the run**
 
-<!-- Choose entries that show the interesting failures, not the ten easiest. -->
+These are actual entries from `results/audit_extract.json`. The ninth shows
+unsupported-language handling; the tenth records a rate-limit rejection.
 
 ```json
-
+[
+  {
+    "combined_score": 0.39705,
+    "content_id": "b3810c1a-a8ac-4000-bb6f-f2360bf24f95",
+    "creator_id": "attacker_EV01",
+    "guess": "unsure",
+    "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+    "model_score": 0.1635,
+    "status": "decided",
+    "style_score": 0.6306,
+    "timestamp": "2026-11-16T07:14:17+00:00"
+  },
+  {
+    "combined_score": 0.44825000000000004,
+    "content_id": "5096a5bb-4de2-40b6-935c-aa397154c885",
+    "creator_id": "attacker_EV02",
+    "guess": "unsure",
+    "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+    "model_score": 0.5943,
+    "status": "decided",
+    "style_score": 0.3022,
+    "timestamp": "2026-11-16T07:14:17+00:00"
+  },
+  {
+    "combined_score": 0.3397,
+    "content_id": "35c4ccf4-e314-4ec1-9a61-5171134544fb",
+    "creator_id": "attacker_EV05",
+    "guess": "human",
+    "label": "Our automated checks suggest this writing was written by a person. These checks cannot verify authorship.",
+    "model_score": 0.3212,
+    "status": "decided",
+    "style_score": 0.3582,
+    "timestamp": "2026-11-16T07:14:18+00:00"
+  },
+  {
+    "combined_score": 0.6977,
+    "content_id": "b5015d1c-b57a-4399-8cc9-75adb1ba9f94",
+    "creator_id": "attacker_FP02",
+    "guess": "ai",
+    "label": "Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision.",
+    "model_score": 0.7387,
+    "status": "decided",
+    "style_score": 0.6567,
+    "timestamp": "2026-11-16T07:14:18+00:00"
+  },
+  {
+    "combined_score": 0.7120500000000001,
+    "content_id": "53117377-ba35-4662-9df5-5c00ca047981",
+    "creator_id": "attacker_FP03",
+    "guess": "ai",
+    "label": "Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision.",
+    "model_score": 0.8051,
+    "status": "decided",
+    "style_score": 0.619,
+    "timestamp": "2026-11-16T07:14:18+00:00"
+  },
+  {
+    "combined_score": 0.73085,
+    "content_id": "b6dc5863-d43b-4b4f-8c09-83ec5ad1759e",
+    "creator_id": "attacker_FP05",
+    "guess": "ai",
+    "label": "Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision.",
+    "model_score": 0.8005,
+    "status": "decided",
+    "style_score": 0.6612,
+    "timestamp": "2026-11-16T07:14:19+00:00"
+  },
+  {
+    "combined_score": 0.2816,
+    "content_id": "8513e4a0-bc7e-47e0-abcd-15213c689a83",
+    "creator_id": "attacker_PI02",
+    "guess": "human",
+    "label": "Our automated checks suggest this writing was written by a person. These checks cannot verify authorship.",
+    "model_score": 0.2044,
+    "status": "decided",
+    "style_score": 0.3588,
+    "timestamp": "2026-11-16T07:14:19+00:00"
+  },
+  {
+    "combined_score": 0.7484500000000001,
+    "content_id": "c40bbc86-1fb0-4d1e-a1c9-ffc442e388d6",
+    "creator_id": "attacker_MF06",
+    "guess": "ai",
+    "label": "Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision.",
+    "model_score": 0.9969,
+    "status": "decided",
+    "style_score": 0.5,
+    "timestamp": "2026-11-16T07:14:20+00:00"
+  },
+  {
+    "combined_score": 0.7032,
+    "content_id": "28afc9d0-d48b-4368-9d96-2c053f19cb2f",
+    "creator_id": "attacker_MF07",
+    "guess": "ai",
+    "label": "Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision.",
+    "model_score": 0.9064,
+    "status": "decided",
+    "style_score": 0.5,
+    "timestamp": "2026-11-16T07:14:20+00:00"
+  },
+  {
+    "creator_id": "attacker_flood",
+    "event": "rejected",
+    "limit": "10 per 1 minute",
+    "reason": "rate_limited",
+    "status": "rejected",
+    "timestamp": "2026-11-16T07:14:20+00:00"
+  }
+]
 ```
 
 **The single worst outcome** — the one I'd least want to explain to a writer
 whose work got caught by it:
 
+FP03, the staff sample representing a person writing carefully in a second
+language, received an AI label at 0.71205. Its model score was 0.8051 and its
+style score was 0.6190. The equal average crossed 0.65, so ordinary writing
+patterns became an accusation. The appeal option does not remove the burden
+this places on a writer.
+
 ---
 
 ## Run Log and Verdicts
 
-<!-- Your five criteria across three trials. `run_eval.py --label before`. -->
+Command: `python run_eval.py --label before`
+
+Produced by `run_eval.py::main`, `run_eval.py::evaluate`, and
+`run_eval.py::appeal_test`. The runner extends the starter to check appeals
+and audit history, invalid responses, label coverage, and group means.
+
+The ten human inputs are non-overlapping, unchanged excerpts from my supplied
+five-paragraph essay, two per paragraph. Quotations, citations, and original
+Markdown entities are retained. These are correlated samples from one essay,
+not ten independent writing tasks. The AI samples were generated by ChatGPT.
+Criterion 5 uses H01–H05 and A01–A05; topics and lengths are not matched.
+The six coverage samples are fixed and include earlier calibration inputs.
+
+Each test submission receives a fresh creator ID to isolate these criteria
+from the separately tested flood limit. Rate limiting stays enabled. Samples
+and targets remain the same for the after run. Matching trials are expected
+because both scoring signals are deterministic for identical input.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. | | | | | |
-| 2. | | | | | |
-| 3. | | | | | |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Human false positives | 0/10 AI labels, all 10 accepted | 0/10 AI; 10/10 accepted | 0/10 AI; 10/10 accepted | 0/10 AI; 10/10 accepted | MET |
+| 2. Appeal rules | 5/5 cases handled correctly | 5/5 | 5/5 | 5/5 | MET |
+| 3. Invalid submissions | 5/5 correct JSON errors | 5/5; service alive=True | 5/5; service alive=True | 5/5; service alive=True | MET |
+| 4. Label coverage | 3/3 labels across six samples | 3/3 labels; 6/6 accepted | 3/3 labels; 6/6 accepted | 3/3 labels; 6/6 accepted | MET |
+| 5. Average score spread | AI mean minus human mean >= 0.25 | gap=0.07393 | gap=0.07393 | gap=0.07393 | MISSED |
 
 **Real output from one trial**, pasted as text, naming the file and function
 that produced it:
 
-```json
+### Criterion 1 — Trial 1
 
+Source: `results/run_2026-11-16_023053_before.json`, produced by
+`run_eval.py::evaluate`.
+
+```json
+{
+  "met": true,
+  "measure": "0/10 AI; 10/10 accepted",
+  "false_positives": 0,
+  "accepted": 10,
+  "trial": 1,
+  "responses": [
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5468999999999999,
+        "content_id": "682b052f-b0bc-4b9e-b40e-e36cff236553",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4625,
+        "style_score": 0.6313
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5549,
+        "content_id": "c21bbe6f-d5df-4978-aedf-3f0ccc405838",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4694,
+        "style_score": 0.6404
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5868,
+        "content_id": "89f41625-b263-4f64-b697-3216472a1e28",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.5762,
+        "style_score": 0.5974
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.51585,
+        "content_id": "ffc35844-a897-4400-bb3f-8000cc9df4c6",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4313,
+        "style_score": 0.6004
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.4921,
+        "content_id": "29d4e198-4c46-4b72-9952-5f69d866c298",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4804,
+        "style_score": 0.5038
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5067,
+        "content_id": "cb2d2583-c4b0-4b9c-84af-3d2a8282d23f",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4261,
+        "style_score": 0.5873
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5136499999999999,
+        "content_id": "0248a1e1-fd78-4e8d-84cc-08e5b8e10f8d",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4589,
+        "style_score": 0.5684
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5062,
+        "content_id": "0a32a055-2eec-4bbb-a117-9644b9fa7a99",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.5257,
+        "style_score": 0.4867
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.38875000000000004,
+        "content_id": "a48441cb-396c-4690-86a1-024894f932ed",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.3204,
+        "style_score": 0.4571
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.4123,
+        "content_id": "9cb357ef-4feb-4ab9-88c0-8ed06328a67d",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.2072,
+        "style_score": 0.6174
+      }
+    }
+  ]
+}
+```
+
+### Criterion 2 — Trial 1
+
+Source: `results/run_2026-11-16_023053_before.json`, produced by
+`run_eval.py::evaluate` and `run_eval.py::appeal_test`.
+
+```json
+{
+  "met": true,
+  "measure": "5/5",
+  "cases": [
+    {
+      "case": "initial detailed explanation",
+      "met": true,
+      "status": 200,
+      "before_entries": 1,
+      "after_entries": 2
+    },
+    {
+      "case": "duplicate explanation",
+      "met": true,
+      "status": 200,
+      "before_entries": 2,
+      "after_entries": 2
+    },
+    {
+      "case": "short explanation",
+      "met": true,
+      "status": 400,
+      "before_entries": 2,
+      "after_entries": 2
+    },
+    {
+      "case": "different detailed explanation",
+      "met": true,
+      "status": 200,
+      "before_entries": 2,
+      "after_entries": 3
+    },
+    {
+      "case": "unknown content ID",
+      "met": true,
+      "status": 404,
+      "before_entries": 0,
+      "after_entries": 0
+    }
+  ],
+  "trial": 1,
+  "responses": [
+    {
+      "route": "/submit",
+      "status": 200,
+      "response": {
+        "confidence": 0.4461,
+        "content_id": "12e578c1-b0c2-4a22-aa5d-eca0e9a8f6af",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.2171,
+        "style_score": 0.6751
+      }
+    },
+    {
+      "route": "/appeal",
+      "status": 200,
+      "response": {
+        "content_id": "12e578c1-b0c2-4a22-aa5d-eca0e9a8f6af",
+        "duplicate": false,
+        "message": "Your appeal has been recorded for review. The writing has not been automatically rescored.",
+        "status": "under_review"
+      }
+    },
+    {
+      "route": "/appeal",
+      "status": 200,
+      "response": {
+        "content_id": "12e578c1-b0c2-4a22-aa5d-eca0e9a8f6af",
+        "duplicate": true,
+        "message": "This explanation is already recorded. No duplicate appeal was saved.",
+        "status": "under_review"
+      }
+    },
+    {
+      "route": "/appeal",
+      "status": 400,
+      "response": {
+        "error": "reasoning_too_short",
+        "message": "Your explanation must contain at least 25 words."
+      }
+    },
+    {
+      "route": "/appeal",
+      "status": 200,
+      "response": {
+        "content_id": "12e578c1-b0c2-4a22-aa5d-eca0e9a8f6af",
+        "duplicate": false,
+        "message": "Your appeal has been recorded for review. The writing has not been automatically rescored.",
+        "status": "under_review"
+      }
+    },
+    {
+      "route": "/appeal",
+      "status": 404,
+      "response": {
+        "error": "content_not_found",
+        "message": "No submission exists with that content_id."
+      }
+    }
+  ]
+}
+```
+
+### Criterion 3 — Trial 1
+
+Source: `results/run_2026-11-16_023053_before.json`, produced by
+`run_eval.py::evaluate`.
+
+```json
+{
+  "met": true,
+  "measure": "5/5; service alive=True",
+  "cases": [
+    {
+      "case": "missing text",
+      "met": true,
+      "status": 400
+    },
+    {
+      "case": "blank text",
+      "met": true,
+      "status": 400
+    },
+    {
+      "case": "wrong type",
+      "met": true,
+      "status": 400
+    },
+    {
+      "case": "short text",
+      "met": true,
+      "status": 400
+    },
+    {
+      "case": "long text",
+      "met": true,
+      "status": 413
+    }
+  ],
+  "service_alive": true,
+  "trial": 1,
+  "responses": [
+    {
+      "route": "/submit",
+      "status": 400,
+      "response": {
+        "error": "invalid_text",
+        "message": "Text is required and must be a nonempty string."
+      }
+    },
+    {
+      "route": "/submit",
+      "status": 400,
+      "response": {
+        "error": "invalid_text",
+        "message": "Text is required and must be a nonempty string."
+      }
+    },
+    {
+      "route": "/submit",
+      "status": 400,
+      "response": {
+        "error": "invalid_text",
+        "message": "Text is required and must be a nonempty string."
+      }
+    },
+    {
+      "route": "/submit",
+      "status": 400,
+      "response": {
+        "error": "text_too_short",
+        "message": "Text must contain at least 50 characters."
+      }
+    },
+    {
+      "route": "/submit",
+      "status": 413,
+      "response": {
+        "error": "text_too_long",
+        "message": "Text must contain no more than 10,000 characters."
+      }
+    }
+  ]
+}
+```
+
+### Criterion 4 — Trial 1
+
+Source: `results/run_2026-11-16_023053_before.json`, produced by
+`run_eval.py::evaluate`.
+
+```json
+{
+  "met": true,
+  "measure": "3/3 labels; 6/6 accepted",
+  "labels": [
+    "ai",
+    "human",
+    "unsure"
+  ],
+  "trial": 1,
+  "responses": [
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.28125,
+        "content_id": "56ebc3fa-0abc-436f-b192-e9f30304ef97",
+        "guess": "human",
+        "label": "Our automated checks suggest this writing was written by a person. These checks cannot verify authorship.",
+        "model_score": 0.0625,
+        "style_score": 0.5
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.6158,
+        "content_id": "8bad3935-518b-4ccb-a65b-03fc319ad26c",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6927,
+        "style_score": 0.5389
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5468999999999999,
+        "content_id": "0c3d3dba-39a2-465e-b654-b9c89f64de18",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4625,
+        "style_score": 0.6313
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5549,
+        "content_id": "856a8db6-81f5-4296-925a-8e23fef53fab",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4694,
+        "style_score": 0.6404
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.6543,
+        "content_id": "f6475ad4-3c2b-42b7-9d96-c1433134c00f",
+        "guess": "ai",
+        "label": "Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision.",
+        "model_score": 0.7361,
+        "style_score": 0.5725
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.7745,
+        "content_id": "fd0fd6ff-600f-4cb7-bd2e-638a4b2ce242",
+        "guess": "ai",
+        "label": "Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision.",
+        "model_score": 0.8582,
+        "style_score": 0.6908
+      }
+    }
+  ]
+}
+```
+
+### Criterion 5 — Trial 1
+
+Source: `results/run_2026-11-16_023053_before.json`, produced by
+`run_eval.py::evaluate`.
+
+```json
+{
+  "met": false,
+  "measure": "gap=0.07393",
+  "human_scores": [
+    0.5468999999999999,
+    0.5549,
+    0.5868,
+    0.51585,
+    0.4921
+  ],
+  "ai_scores": [
+    0.6158,
+    0.6543,
+    0.6246499999999999,
+    0.5837,
+    0.58775
+  ],
+  "human_mean": 0.53931,
+  "ai_mean": 0.61324,
+  "gap": 0.07393000000000005,
+  "trial": 1,
+  "responses": [
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5468999999999999,
+        "content_id": "a8dbab39-5d35-464d-9ddd-18aec885c937",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4625,
+        "style_score": 0.6313
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5549,
+        "content_id": "15d0ec5e-8e25-4c51-ab95-e1660dbf0267",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4694,
+        "style_score": 0.6404
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5868,
+        "content_id": "ca5e1477-db12-4a97-b047-27ab6a7ac9ff",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.5762,
+        "style_score": 0.5974
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.51585,
+        "content_id": "bb13d113-d811-4f59-94ff-62a49540a679",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4313,
+        "style_score": 0.6004
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.4921,
+        "content_id": "0fbbac1e-7f8a-4898-8413-e88659c5f331",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.4804,
+        "style_score": 0.5038
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.6158,
+        "content_id": "adf01144-b8f9-418e-892a-4194398ff925",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6927,
+        "style_score": 0.5389
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.6543,
+        "content_id": "ce6ec40f-68bb-4dff-a030-71e55c624481",
+        "guess": "ai",
+        "label": "Our automated checks suggest this writing may be AI-generated. These checks can be wrong. You can appeal this decision.",
+        "model_score": 0.7361,
+        "style_score": 0.5725
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.6246499999999999,
+        "content_id": "899c04b2-8123-4fd8-b9d8-70e7448e3ff1",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6672,
+        "style_score": 0.5821
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.5837,
+        "content_id": "c031faee-7cc7-473a-a06e-aeb132d8e746",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.5394,
+        "style_score": 0.628
+      }
+    },
+    {
+      "status": 200,
+      "response": {
+        "confidence": 0.58775,
+        "content_id": "391f23c6-9885-48f3-85d7-bddf1048c7b6",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.5288,
+        "style_score": 0.6467
+      }
+    }
+  ]
+}
 ```
 
 **Diagnoses**
 
-<!-- For each miss AND each broken attack: the stage and the mechanism.
+1. **Criterion 1 — MET.** All ten excerpts were accepted and none received an
+   AI label in any trial. All ten were unsure, so this is success at avoiding
+   accusations on these samples, not successful recognition of human authorship.
+   It does not cancel the six false positives in the staff set.
+2. **Criterion 2 — MET.** Each trial checked the initial valid appeal, an exact
+   duplicate, a short explanation, a different valid explanation, and an unknown
+   ID. Log counts changed only for the two distinct valid appeals. The original
+   decision remained unchanged. Length is not a check of evidence quality.
+3. **Criterion 3 — MET.** All five invalid-input cases returned the required
+   JSON errors and HTTP codes in every trial. A subsequent health check passed.
+   The attack set also exposed valid-shaped inputs that length checks do not
+   make suitable for authorship scoring.
+4. **Criterion 4 — MET.** The fixed six inputs produced all three labels in
+   every trial. One AI label was on my human morning paragraph. Coverage is
+   not accuracy, and a later threshold change may remove that label from this
+   particular set even while the label remains reachable in principle.
+5. **Criterion 5 — MISSED.** The human mean was 0.53931 and the AI mean was
+   0.61324, a gap of 0.07393 rather than 0.25. Signal one had means of 0.48396
+   and 0.63284, a gap of 0.14888. Signal two had means of 0.59466 and 0.59364,
+   a gap of -0.00102. **Stages: signal two and combining rule.** The style
+   heuristics gave nearly identical group averages, and weighting them at 50%
+   reduced the separation supplied by the model. Signal one alone also misses
+   the target. Changing a label threshold cannot change this score gap.
 
-     Your service has five stages: the route, signal one, signal two, the
-     combining rule, and the label mapping.
+Broken attacks are diagnosed by shared mechanisms below. The targeting column
+states staff intent; a single attacked input does not establish the causal
+change that would require a paired, unmodified control.
 
-     Not a diagnosis:  "The evasion attacks got through."
-     A diagnosis:      "Four evasion inputs got through. All four had typos
-                        added to AI-generated text. My second signal measures
-                        word variety, and typos raise word variety — so it read
-                        them as more human. My combining rule weights that
-                        signal at 0.6, so it dragged the whole score down."
+| Broken attacks | Stage and mechanism supported by this run |
+|---|---|
+| EV01 | Signal one scored 0.1635 while style scored 0.6306. Their average was 0.39705, below the AI cutoff. The low model score drove the partial evasion; this run does not show that typos lowered the style score. |
+| EV02, EV06 | Signal two returned 0.3022 and 0.2531. Sentence fragmentation and uneven lengths target the spread component; their low style scores pulled the combined scores to 0.44825 and 0.41290. Both were unsure. |
+| EV03, EV09 | Style scores of 0.4907 and 0.4776 reduced model scores of 0.6662 and 0.7042 to unsure averages. Quotations and mixed human/AI text are measured as a single passage. |
+| EV04 | Both scores, 0.6114 and 0.6166, were below 0.65, so averaging could not reach the AI band. Rare-word predictability is the targeted weakness; no paired control isolates its effect here. |
+| EV05 | Both scores leaned human, 0.3212 and 0.3582, producing 0.33970 and a human label. Both signals measure the edited text's patterns rather than its creation history. |
+| EV07, EV08 | Style fell back to 0.5. With model scores 0.5862 and 0.2452, equal weighting produced unsure scores of 0.54310 and 0.37260. A neutral fallback is insufficient evidence, not independent support for either authorship. |
+| FP02–FP07 | Signal one ranged from 0.7387 to 0.8816. Style ranged from 0.4684 to 0.6612. The equal averages were 0.67500–0.73085, crossing the label mapper's 0.65 AI cutoff. Predictable human prose and the chosen cutoff created six false accusations. |
+| PI02 | The requested human outcome occurred, but the exact requested score 0.02 did not: the service returned 0.2816 from scores 0.2044 and 0.3588. The classification outcome broke; there is no evidence of instruction execution because this model scores text rather than following a chat instruction. |
+| MF05, MF06 | The route checked string type and length, accepting a repeated-character string and emoji-only input. Signal two fell back to 0.5; model scores 0.9976 and 0.9969 produced confident AI judgments. The route has no suitability check and the scoring path has no abstention for these inputs. |
+| MF07 | Valid Arabic text received model 0.9064 and style 0.5, producing 0.7032 and an AI label. The style tokenizer does not recognize Arabic words, so it falls back. The service still labels the result confidently without validated language support. |
 
-     Look for a pattern. Five failures on one signal is one problem, not five. -->
+PI04 retained the fixed safe label, and PI05 did not insert the supplied
+fake fields into the decision log. Those outcomes held the tested output and
+log boundaries. This backend test does not test how a separate website renders
+submitted HTML.
+
+FP08 followed my 50-character minimum and was logged as `text_too_short`.
+That holds the input rule but still excludes genuine short writing. RQ06 was
+rejected for short text before reaching the creator-ID check, so that attack
+alone does not isolate validation of an object-valued creator ID.
 
 ---
 
 ## The Improvement
 
 **What I changed:**
+
+Not implemented yet. The before measurements above were collected without
+changing signals, weights, thresholds, or labels.
 
 **Which diagnosis pointed at it:**
 
