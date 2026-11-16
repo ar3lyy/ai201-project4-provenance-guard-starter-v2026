@@ -22,97 +22,53 @@ A scenario carries **either** of these:
               because you cannot express "the field is missing" as a string.
 """
 
-SCENARIOS = [
-    {
-        "name": "my own writing",
-        "criterion": 1,
-        # ⚠️ PUT YOUR OWN WRITING HERE. Not AI text, not a sample from the web —
-        # things you actually wrote. This is the criterion that matters most and
-        # it's meaningless with someone else's prose.
-        "texts": [
-            "REPLACE ME with a paragraph you wrote yourself.",
-            "REPLACE ME with another one. Ten pieces is the usual number.",
-        ],
-    },
-    {
-        "name": "label coverage",
-        "criterion": 2,
-        # Inputs spread across your score range, so you can check all three
-        # labels are actually reachable.
-        "texts": [
-            "REPLACE ME with something you're confident is AI-generated.",
-            "REPLACE ME with something you're confident is human-written.",
-            "REPLACE ME with something genuinely borderline.",
-        ],
-    },
-    # A bad-input criterion looks like this. Uncomment and adjust if that's one
-    # of your five — these are raw request bodies, sent exactly as written.
-    #
-    # {
-    #     "name": "bad input",
-    #     "criterion": 3,
-    #     "bodies": [
-    #         {"text": "", "creator_id": "eval_bad_empty"},
-    #         {"creator_id": "eval_bad_missing"},          # no text field at all
-    #         {"text": "word " * 50000, "creator_id": "eval_bad_huge"},
-    #         {"text": None, "creator_id": "eval_bad_null"},
-    #     ],
-    # },
 
-    # TODO: add what your remaining criteria need.
-    #
-    # A criterion about the appeal path can't be tested by sending text alone;
-    # it needs a submission first and then an appeal against the content_id
-    # that came back. You'll need to test that one by hand, or extend this file
-    # and run_eval.py to do it. Saying which you did is part of the write-up.
+HUMAN_TEXTS = ['Human tendencies are natural urges that come to us to fulfill our basic needs while also giving people a sense of fulfillment for the time being. But because certain actions happen so frequently, this makes it harder to find the consequences our actions have in society, because of how glossed over and unaware we are of doing such acts. Doing certain actions frequently causes us to tune them out of our thought process. In “Immune to Reality,” Daniel Gilbert believes that humans have a “psychological immune system” to feel secure about the realities that have happened to them. This “immune system” is an automatic tendency humans have which helps create reason and understanding in negative situations we go through while also trying to maintain positivity. In “Mark Zuckerberg’s War on Free Will,” by Franklin Foer, Foer explains how our free will is slowly crippling away as we continue to use platforms such as Facebook that use our data for their algorithms.', 'Similarly, in “The Mega-Marketing of Depression in Japan,” Ethan Watters goes in-depth about how pharmaceutical companies try to take over the mindset of those in Japan by “selling depression” to gain profit and control of Japanese people since depression was not a known illness in Japan at the time. Foer and Yong’s articles show how people create things to help others, while in Gilbert we read the real reasons as to why we do it. Humans tend to find “silver linings” in what they are doing in order to convince themselves or others that they are doing no harm, however, even when we convince ourselves we do no harm the negative outcomes can still become noticeable to others. And when we start to notice these negative outcomes this is when we may start to shift the blame onto other things instead of ourselves; allowing us to never address the situation at hand and never make a change.', "Reasons as to why we do the things we do might not always be the best and by also having an instinct to always have the best image of ourselves out there people might alter the reason for their acts with silver linings. Gilbert mentions how “the process by which we generate positive views are many: we pay more attention to favorable information, we surround ourselves with those who provide it, and we accept it uncritically (Gilbert 155)”. Basically saying how we give more weight to positive information and surround ourselves with others who do the same. We cherry-pick parts of facts to make us feel more secure and only “find silver lining[s] only when we must” (Gilbert, 150). Showing that when we do put weight on non-positive things we try to justify it by inserting someone the world would find acceptable. For example, when Watters states how pharmaceutical companies were trying to find the best way in which they can profit off of depression they realized that they needed to shift “the Japanese public's perception about the meaning of depression” (527). This led GlaxoSmithKline (GSK) to take a deep dive into learning and trying to understand how these “beliefs take shape” (527). This shows how far people will go in order to get what they want, and even though people like GlaxoSmithKline knew that there was “no market [for] the drug” they continued to try to make one, altering the Japanese’s perspective on depression (Watters, 526). Japanese people started to unconsciously follow these new Westernized ideas because of how depression has been advertised to them which makes them oblivious to the reality of what is going on. This was possible because people like GSK were willing to do research to understand the umwelt of the Japanese people.", 'He stated how “the citizens of Japan and other countries around the world have access to the newest brand-name antidepressants?” (Watters, 539). Saying how these advancements were “cre\xadated using the latest advances in science and technology” creates a silver lining since they are doing something terrible such as introducing Japanese people to a disease but claiming that they can fix it when originally it was never a problem in Japanese culture to begin with (Watters, 539). Foer similarly mentions how the creators of algorithms claim that they want to “relieve humans of the burden of choosing, to nudge them in the right direction”, when they are actually getting their information to help their algorithms thrive to attract more consumers (114). Creators claim that they are helping ease the user to think that algorithms are meant to help them take the weight off their shoulders when in reality they are benefiting from it more than they are. They are “surveilling use[ers], auditing them, using them as lab rats in its behavior experiments… [and] while it creates the impression that it offers choice, Facebook paternalistically nudges [users] in the direction it deems best for them, which also happens to be the direction that thoroughly addicts them” (Foer, 104). Facebook uses algorithms as a silver lining making customers think that they are being used as a way for them to interact with favorable information, but it is just making them addicted to these applications. Watters and Foer both show how large corporations are capitalizing on irresponsible consumerism, while also misleading consumers by creating silver linings in order to avoid creating an uproar.', "Although we might create silver linings when we see how our actions disrupt others' way of living, it does not stop negative outcomes from arising from it, making it noticeable to others. Even by witnessing these outcomes, people might still be unable to stop doing certain propensities, such as trying to make themselves look like the good guy when their actions are questionable. Gilbert writes that “regret is an emotion we feel when we blame ourselves for unfortunate outcomes that might have been prevented had we only behaved differently in the past. . .“ (146). Meaning that when people receive criticism for their questionable actions or silver linings it can cause regret, but since there are certain acts we do that are not questionable enough to be called out we might continue to do them. This is because “unlike large threats, small threats can sneak in under the radar “, making it easier to get away with (148). Which can lead people to do excessive actions that should not be so easily forgiven. “Small threats'' that went under the radar would be what Facebook is doing to its users. Foer explains, how Facebook “creates the impression that it offers choice, [but instead it] nudges users in the direction it deems best for them, which also happens to be the direction that thoroughly addicts them” (104).", 'Facebook is creating an illusion that it is giving what the consumers think is freedom, while its algorithms are showing them posts that they already know their customers will like and want to see. Similar to Facebook’s, GlaxoSmithKline’s way of marketing can be looked at as a “threat”. This is because they were undoing Japanese culture. Pharmaceutical companies gathering information on their culture to gain trust was a mirage just so they can exploit them and make them westernized. Applbaum mentions that his “job was to ‘speed the evolution along,’ [and] to move other countries along the path to be like us” (539). This shows how instead of Americans trying to understand Japanese culture, we are just trying to change them “to be like us” (Watters, 539). Americans are aware that the Japanese people are unaware of them messing up their culture but because they will benefit from exploiting them they continue with their plans. Convincing the Japanese people that they are helping them, helps lessen the chance of backlash which helps them promote depression with no interference. With the Japanese people lacking awareness, the pharmaceutical companies failing to take responsibility, and turning a blind eye to the harm only makes it easier for them to get away with actions people see little flaws in their actions.', "Once we notice that our consequences cannot be avoided by silver linings we tend to shift blame onto other people even after realizing how bad our actions are. This is because shifting the blame tends to take the pressure off one's self, making it easier to continue to do similar acts, and never face the reality of the things they have done. Gilbert claims “when experiences make us feel sufficiently unhappy, the psychological immune system cooks facts and shifts blame to offer us a more positive view” (Gilbert 148). Our psychological immune system does this process to keep us happy to continue living with no burdens. For example, Facebook algorithms collect and use our data without their customers knowing they are doing so. With this data, they make their algorithms more addictive by having the information they know their customers will enjoy. Foer states how “Facebook likes to boast of the fact of its experimentation more than the details of the actual experiments themselves…We know, for example…Facebook attempted to manipulate the mental state of its users…This study was roundly condemned as invasive, but it's not so unusual” (Foer 113). In other words, Facebook does experiments but does not give users the details on what is being captured from them. They go so far as trying to “manipulate” their mental state, but since it was “not so unusual”, meaning that they do this often, it is okay.", 'The reason as to why they think it is okay to do such things is because as Gilbert states, “the Psychological Immune System shifts the blame when we go through bad experiences\'\', meaning that when they do have negative experiences they convince others and themselves that it is okay since it is benefiting the user, making it justified (146). Pharmaceutical companies tend to do similar things. GlaxoSmithKline for example spent lots of time researching different cultural aspects of Japan to help them better promote a “safe” medication that people would be willing and comfortable taking. In doing so GlaxoSmithKline helped promote this medication by saying how the “clinical testing in Japan [is] quite poor and asserted that there was no "good clinical practice" in [Japan] (Watters, 534). He goes on to say how “the science behind the American human trials was unassailable - certainly better than anything the Japanese would attempt” (534). GlaxoSmithKline is shifting the blame from how they are using Japanese people, to them knowing what\'s best for them since they are much more advanced than other countries. GlaxoSmithKline was more motivated by money, but because of our psychological immune systems, GSK convinced people that their new drug was beneficial to the Japanese. Which convinced everyone since the pharmaceutical companies got what they intended. They shifted blame and created silver linings to not receive any backlash, allowing us to never address the situation at hand and never make a change in the future problems that came with it.', '&#x9;As society progresses consumers will follow whatever big corporations throw their way. Even though they might be unaware of their intentions, they will blindly, and willingly continue to help their schemes whether they know it or not.', "If consumers ever question their acts, the creator's psychological immune system will kick in, and create silver linings, or shift blame onto other things, making the consequences of their actions less harsh. Therefore, the “jig” will never be up because as long as excuses are being made to shield the user from what's happening then no questions will be asked preventing corporations to take accountability for their wrong doings.&#x20;"]
+
+AI_TEXTS = ['Community gardens provide neighborhoods with more than fresh produce. They create shared spaces where residents can work together, exchange knowledge, and develop stronger relationships. Growing vegetables also gives people an opportunity to learn about nutrition and understand where their food comes from. For families with limited access to affordable produce, a community garden can offer a useful additional source of healthy ingredients. However, successful gardens require planning and consistent participation. Members must agree on responsibilities such as watering, maintaining tools, and caring for shared areas. When these responsibilities are clearly organized, community gardens can support both individual well-being and a stronger sense of connection among neighbors.', 'Public libraries serve an important role in supporting education and community participation. Beyond lending books, they provide access to computers, study spaces, and resources that may be difficult for some residents to obtain elsewhere. Students can use these services to complete assignments, while adults can search for employment or learn new skills. Libraries also organize activities that bring people together, including reading groups and workshops. Maintaining these services requires dependable funding and staff who understand local needs. When communities invest in their libraries, they support a shared space where people can access information and continue learning throughout their lives.', 'Effective teamwork depends on communication, shared responsibilities, and a clear understanding of the goal. When members know what they are expected to contribute, they can organize their work and identify problems before those problems become difficult to manage. Regular conversations also give people opportunities to ask questions and offer suggestions. However, cooperation does not mean that everyone must agree on every decision. Differences in perspective can improve the final result when they are discussed respectfully. A successful team creates space for these differences while maintaining a common direction. This balance allows individual contributions to support the progress of the whole group.', 'Digital platforms often use recommendation systems to organize the information that users see. These systems identify patterns in previous activity and suggest content that may attract attention. This can make large collections of information easier to navigate, but it can also limit the variety of perspectives a person encounters. Users may repeatedly receive material that resembles what they already prefer. Understanding this process can help people make more deliberate choices about their online activity. Platforms can also support informed participation by explaining how recommendations are produced and providing accessible controls. Greater transparency gives users more opportunities to influence their own experience.', 'Establishing a consistent study routine can help students manage demanding coursework. A useful routine begins with identifying upcoming deadlines and dividing larger assignments into smaller tasks. This approach makes progress easier to track and reduces the need to complete everything at the last moment. Students should also allow time to review difficult material and ask questions when they need clarification. The most effective schedule is one that can be maintained alongside other responsibilities. Flexibility matters because unexpected events can interrupt even a careful plan. By reviewing their routine regularly, students can adjust their priorities while continuing to work toward their academic goals.']
+
+COVERAGE_TEXTS = ['This is a test submission to check that both signals return scores and the service combines them correctly.', 'Community gardens provide neighborhoods with more than fresh produce. They create shared spaces where residents can work together, exchange knowledge, and develop stronger relationships. Growing vegetables also gives people an opportunity to learn about nutrition and understand where their food comes from. For families with limited access to affordable produce, a community garden can offer a useful additional source of healthy ingredients. However, successful gardens require planning and consistent participation. Members must agree on responsibilities such as watering, maintaining tools, and caring for shared areas. When these responsibilities are clearly organized, community gardens can support both individual well-being and a stronger sense of connection among neighbors.', 'Human tendencies are natural urges that come to us to fulfill our basic needs while also giving people a sense of fulfillment for the time being. But because certain actions happen so frequently, this makes it harder to find the consequences our actions have in society, because of how glossed over and unaware we are of doing such acts. Doing certain actions frequently causes us to tune them out of our thought process. In “Immune to Reality,” Daniel Gilbert believes that humans have a “psychological immune system” to feel secure about the realities that have happened to them. This “immune system” is an automatic tendency humans have which helps create reason and understanding in negative situations we go through while also trying to maintain positivity. In “Mark Zuckerberg’s War on Free Will,” by Franklin Foer, Foer explains how our free will is slowly crippling away as we continue to use platforms such as Facebook that use our data for their algorithms.', 'Similarly, in “The Mega-Marketing of Depression in Japan,” Ethan Watters goes in-depth about how pharmaceutical companies try to take over the mindset of those in Japan by “selling depression” to gain profit and control of Japanese people since depression was not a known illness in Japan at the time. Foer and Yong’s articles show how people create things to help others, while in Gilbert we read the real reasons as to why we do it. Humans tend to find “silver linings” in what they are doing in order to convince themselves or others that they are doing no harm, however, even when we convince ourselves we do no harm the negative outcomes can still become noticeable to others. And when we start to notice these negative outcomes this is when we may start to shift the blame onto other things instead of ourselves; allowing us to never address the situation at hand and never make a change.', 'Public libraries serve an important role in supporting education and community participation. Beyond lending books, they provide access to computers, study spaces, and resources that may be difficult for some residents to obtain elsewhere. Students can use these services to complete assignments, while adults can search for employment or learn new skills. Libraries also organize activities that bring people together, including reading groups and workshops. Maintaining these services requires dependable funding and staff who understand local needs. When communities invest in their libraries, they support a shared space where people can access information and continue learning throughout their lives.', 'Most mornings, I wake up and spend a few minutes on my phone before finally getting out of bed. I usually grab something quick to eat, get dressed, and make sure I have everything I need for class. Sometimes I end up rushing because I lose track of time, but I usually manage to get there on time.']
+
+APPEAL_TEXT = (
+    "This submission is used to test the appeal workflow with a valid content "
+    "identifier. Its authorship label is not the target of this workflow test."
+)
+REASON_ONE = (
+    "This is a detailed test explanation describing how I prepared the submission, "
+    "reviewed my wording, and kept draft notes that a reviewer could request "
+    "when examining the disputed decision."
+)
+REASON_TWO = (
+    "I am adding a different explanation for the same submission to test whether "
+    "new information is preserved separately, including my revision process "
+    "and the notes available for a later review."
+)
+
+SCENARIOS = [
+    {"criterion": 1, "name": "Human false positives", "target": "0/10 AI labels, all 10 accepted"},
+    {"criterion": 2, "name": "Appeal rules", "target": "5/5 cases handled correctly"},
+    {"criterion": 3, "name": "Invalid submissions", "target": "5/5 correct JSON errors"},
+    {"criterion": 4, "name": "Label coverage", "target": "3/3 labels across six samples"},
+    {"criterion": 5, "name": "Average score spread", "target": "AI mean minus human mean >= 0.25"},
 ]
 
 
-def validate() -> list[str]:
-    """
-    Complain about anything malformed, before a long run rather than during.
-
-    A "bodies" scenario is deliberately exempt from the empty check — an empty
-    string is the whole point of a bad-input case, and refusing to run one
-    would make that criterion untestable.
-    """
+def validate():
     problems = []
-    for i, scenario in enumerate(SCENARIOS, 1):
-        if not scenario.get("name"):
-            problems.append(f"scenario {i} has no name")
-
-        texts = scenario.get("texts")
-        bodies = scenario.get("bodies")
-
-        if texts and bodies:
-            problems.append(
-                f"scenario {i} ('{scenario.get('name')}') has both texts and "
-                f"bodies — pick one"
-            )
-            continue
-
-        if bodies:
-            for j, body in enumerate(bodies, 1):
-                if not isinstance(body, dict):
-                    problems.append(
-                        f"scenario {i}, body {j} is not a dict — bodies are whole "
-                        f"request bodies, like {{'text': '', 'creator_id': 'x'}}"
-                    )
-            continue
-
-        if not texts:
-            problems.append(f"scenario {i} has no texts and no bodies")
-            continue
-
-        for j, text in enumerate(texts, 1):
-            if not str(text).strip():
-                problems.append(
-                    f"scenario {i}, text {j} is empty — if an empty submission is what "
-                    f"you're testing, use 'bodies' instead of 'texts'"
-                )
-            elif str(text).startswith("REPLACE ME"):
-                problems.append(
-                    f"scenario {i} ('{scenario.get('name')}'), text {j} is still "
-                    f"the placeholder"
-                )
+    for name, texts, expected in [
+        ("HUMAN_TEXTS", HUMAN_TEXTS, 10),
+        ("AI_TEXTS", AI_TEXTS, 5),
+        ("COVERAGE_TEXTS", COVERAGE_TEXTS, 6),
+    ]:
+        if len(texts) != expected:
+            problems.append(f"{name} needs {expected} samples")
+        for i, text in enumerate(texts, 1):
+            if not isinstance(text, str) or not 50 <= len(text.strip()) <= 10000:
+                problems.append(f"{name} sample {i} has invalid length or type")
+    if len(set(HUMAN_TEXTS)) != 10:
+        problems.append("Human excerpts must be distinct")
+    for reason in [REASON_ONE, REASON_TWO]:
+        if len(reason.split()) < 25:
+            problems.append("Valid appeal reasoning needs at least 25 words")
     return problems
+
