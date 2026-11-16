@@ -31,6 +31,8 @@ from flask import Flask, jsonify, request
 import audit
 import config
 import detector
+import stylometry
+import scoring
 
 app = Flask(__name__)
 
@@ -241,17 +243,20 @@ def submit():
     content_id = str(uuid.uuid4())
     model_score = float(detector.model_signal(text))
 
+
+    style_score = float(stylometry.style_signal(text))
+    confidence = float(scoring.combine_signals(model_score, style_score))
+
     guess = "unsure"
-    confidence = 0.5
-    label = "Scoring is not complete yet. This is a one-signal test."
+    label = "Both signals are connected. Final labels are not connected yet."
 
     audit.log_decision(
         content_id=content_id,
         creator_id=creator_id,
         guess=guess,
         model_score=model_score,
-        style_score=None,
-        combined_score=None,
+        style_score=style_score,
+        combined_score=confidence,
         label=label,
         status="pending_scoring",
     )
@@ -262,7 +267,7 @@ def submit():
         "confidence": confidence,
         "label": label,
         "model_score": model_score,
-        "style_score": None,
+        "style_score": style_score,  
     }), 200
 
 

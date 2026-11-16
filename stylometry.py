@@ -1,21 +1,18 @@
 """
-Signal two: the style signal. ← YOU BUILD THIS IN MILESTONE 4
+Signal two: the style signal.
 
-Signal one reads the text for meaning. This one measures it *as text* — the
-shape of it, without understanding a word.
+Signal one measures how predictable text is to a local language model.
+This one measures it *as text* — the shape of it, without understanding a word.
 
-Three measures are stubbed below because the brief names those three. They are
-stubs, not implementations: what they compute is yours, and so is how you
-combine them.
+Three measures are implemented below:
 
     sentence_length_spread   do sentences vary in length, or march in step?
     type_token_ratio         how much of the vocabulary repeats?
-    punctuation_density      how much punctuation, and how varied?
+    punctuation_density      how much selected punctuation appears?
 
-Why these might differ between human and AI writing: generated prose tends
-toward even, mid-length sentences and a narrower band of vocabulary, because
-that's what "most likely next word" produces on average. Human writing is
-lumpier — a three-word sentence next to a forty-word one.
+These are experimental heuristics, not proof of authorship. Both human and
+AI writing can have consistent sentences, repeated vocabulary, or sparse
+punctuation.
 
 ⚠️ **The blind spot, which you have to name in Milestone 1.**
 
@@ -45,85 +42,131 @@ def words(text: str) -> list[str]:
     return re.findall(r"[a-z0-9']+", text.lower())
 
 
-# ── The three measures — YOU BUILD THESE ─────────────────────────────────────
+# ── The three measures ──────────────────────────────────────────────────────
 
 def sentence_length_spread(text: str) -> float:
     """
-    How much sentence length varies. ← TODO
+    How much sentence length varies.
 
     Returns:
-        A float. Decide yourself what scale it's on and which direction means
-        "more human" — then write that down, because your combining rule
-        depends on knowing it.
+        The sample standard deviation of sentence word counts divided by
+        their mean. Higher means more variation. This can exceed 1.
 
-    A hint on what you're reaching for: the standard deviation of sentence
-    lengths, probably divided by the mean so a long text and a short one are
-    comparable. `statistics.stdev` is imported for you.
-
-    Watch the edge case: a one-sentence submission has no spread at all, and
-    `stdev` raises on fewer than two values. Decide what that should return
-    before the attack set decides for you.
+    A one-sentence submission has no measurable spread, so this function
+    returns 0.0 when fewer than two nonempty sentences are available.
+    The style signal handles that case by returning a neutral score.
     """
-    # TODO: replace this
-    return 0.0
+    lengths = [
+        len(words(sentence))
+        for sentence in sentences(text)
+        if words(sentence)
+    ]
+
+    if len(lengths) < 2:
+        return 0.0
+
+    return statistics.stdev(lengths) / statistics.mean(lengths)
 
 
 def type_token_ratio(text: str) -> float:
     """
-    Unique words over total words. ← TODO
+    Unique words over total words.
 
     Returns:
         A float between 0 and 1. Higher means more varied vocabulary.
+        Empty text returns 0.0.
 
     Worth knowing before you rely on it: this measure falls as text gets
     longer, because common words repeat. Two texts of different lengths aren't
     directly comparable on it, and if your test inputs vary a lot in length,
     that alone can look like a signal.
     """
-    # TODO: replace this
-    return 0.0
+    tokens = words(text)
+
+    if not tokens:
+        return 0.0
+
+    return len(set(tokens)) / len(tokens)
 
 
 def punctuation_density(text: str) -> float:
     """
-    How much punctuation, relative to length. ← TODO
+    How much selected punctuation appears, relative to length.
 
     Returns:
-        A float. Whether you count all punctuation or only some kinds — commas,
-        semicolons, dashes — is a real choice. Semicolons and em dashes are
-        more interesting than full stops, because they vary more between
-        writers.
+        The number of selected punctuation marks divided by the number of
+        non-whitespace characters. Empty text returns 0.0.
+
+    Counts commas, semicolons, colons, question marks, exclamation marks,
+    dashes, parentheses, and square brackets. Full stops and apostrophes
+    are excluded.
     """
-    # TODO: replace this
-    return 0.0
+    characters = [
+        character for character in text
+        if not character.isspace()
+    ]
+
+    if not characters:
+        return 0.0
+
+    punctuation = sum(
+        character in ",;:!?—–-()[]"
+        for character in characters
+    )
+
+    return punctuation / len(characters)
 
 
 # ── Combining them ───────────────────────────────────────────────────────────
 
 def style_signal(text: str) -> float:
     """
-    The style signal as a 0–1 score. **Higher means more likely AI.** ← TODO
+    The style signal as a 0–1 score. Higher means more AI-like.
 
-    Combine your three measures into one number. Same direction as
-    `detector.model_signal`, so that `scoring.combine_signals` can treat them
-    the same way — if one of your signals runs backwards, everything above it
-    is wrong in a way that's hard to see.
+    Each component is converted to a value between 0 and 1:
 
-    Two things to decide and write down:
+      1. Sentence spread: 1 minus spread, with spread capped at 1.
+         Less sentence variation produces a higher component score.
+      2. Vocabulary: 1 minus the type-token ratio.
+         More repeated vocabulary produces a higher component score.
+      3. Punctuation: 1 minus density divided by 0.05, capped at 1.
+         Less selected punctuation produces a higher component score.
 
-      1. Which direction each measure points. Low spread means more AI-ish, so
-         it needs flipping. Work out which of your three need that.
-      2. How to get each onto a comparable scale. A raw type-token ratio sits
-         between 0 and 1; a raw punctuation count doesn't. Adding them
-         unscaled means whichever has the bigger numbers wins by default.
+    The components receive weights of 0.50, 0.30, and 0.20 respectively.
+    These weights and the 0.05 punctuation scale are heuristic choices,
+    not values established by validation.
+
+    Text with fewer than 20 words or two nonempty sentences receives 0.5
+    because there is too little evidence for these measurements.
 
     Test it on the four calibration inputs from Milestone 4 — clearly AI,
-    clearly human, plain conventional human writing, lightly-edited AI — before
-    you trust it. Plain and ordinary, not formal: formal prose reads as *human*
-    to signal one, and it is plain writing that gets accused.
+    clearly human, plain conventional human writing, lightly-edited AI —
+    before you trust it.
     """
-    # TODO: replace this
-    return 0.5
+    tokens = words(text)
+    sentence_count = sum(
+        bool(words(sentence))
+        for sentence in sentences(text)
+    )
+
+    if len(tokens) < 20 or sentence_count < 2:
+        return 0.5
+
+    spread = sentence_length_spread(text)
+    variety = type_token_ratio(text)
+    density = punctuation_density(text)
+
+    spread_score = 1.0 - min(spread, 1.0)
+    repetition_score = 1.0 - variety
+    punctuation_score = 1.0 - min(density / 0.05, 1.0)
+
+    score = (
+        0.50 * spread_score
+        + 0.30 * repetition_score
+        + 0.20 * punctuation_score
+    )
+
+    return round(max(0.0, min(score, 1.0)), 4)
 
 
 if __name__ == "__main__":
@@ -139,4 +182,4 @@ if __name__ == "__main__":
     print(f"type_token_ratio         {type_token_ratio(text)}")
     print(f"punctuation_density      {punctuation_density(text)}")
     print(f"style_signal             {style_signal(text)}   (higher = more likely AI)")
-    print("\nAll zeros? These are stubs — Milestone 4 is where you build them.")
+    print("\nStyle measurements are heuristics, not proof of authorship.")
