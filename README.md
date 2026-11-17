@@ -1706,3 +1706,17 @@ bear the cost of an automated accusation.
 ---
 
 📖 **How to run this project: [RUNNING.md](RUNNING.md)**
+
+
+
+## Capstone
+
+**What This Extends**
+
+This capstone extends my Provenance Guard service from Units 7 and 8. The service already scores writing, records decisions, accepts appeals, and limits submissions. I am adding request-level logging so I can inspect what each submission or appeal received, returned, and how long it took.
+
+**The Shape**
+
+I chose Shape A: deploy and instrument, using Path B: local with logs. The extension will record each submission and appeal request with a timestamp, input, output, HTTP status, and duration, including failed requests. I will use recorded timings to measure the average runtime across ten submissions.
+
+Changes to the detector, scoring thresholds, and rate limits are out of scope. I am also leaving out a web interface and online hosting.
