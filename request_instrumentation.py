@@ -3,7 +3,7 @@
 import time
 import uuid
 
-from flask import g, request
+from flask import g, jsonify, request
 
 from request_audit import write_request
 
@@ -55,3 +55,15 @@ def install_request_logging(app):
         )
 
         return response
+
+
+    @app.errorhandler(500)
+    def record_server_error(error):
+        """Return a JSON failure that the response hook can record."""
+        if request.path not in TRACKED_ROUTES:
+            return error
+
+        return jsonify({
+            "error": "internal_server_error",
+            "message": "The request could not be completed.",
+        }), 500
