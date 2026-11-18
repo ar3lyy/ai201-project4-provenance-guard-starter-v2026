@@ -1,0 +1,7 @@
+{
+  "model": "gpt2",
+  "weights_file": "model.safetensors",
+  "bytes": 548105171,
+  "decimal_MB": 548.105171,
+  "method": "Measured cached weight-file size using stat; excludes tokenizer and other cache files."
+}

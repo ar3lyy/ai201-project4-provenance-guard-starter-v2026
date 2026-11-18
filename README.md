@@ -1720,3 +1720,605 @@ This capstone extends my Provenance Guard service from Units 7 and 8. The servic
 I chose Shape A: deploy and instrument, using Path B: local with logs. The extension will record each submission and appeal request with a timestamp, input, output, HTTP status, and duration, including failed requests. I will use recorded timings to measure the average runtime across ten submissions.
 
 Changes to the detector, scoring thresholds, and rate limits are out of scope. I am also leaving out a web interface and online hosting.
+
+**Running It**
+
+I used Path B: local with logs. `RUNNING.md` contains the environment,
+setup, and single Gunicorn start command. A fresh local clone with a
+new virtual environment processed and logged a real submission. It reused
+this machine's existing Hugging Face model cache; this was not a test
+of downloading the model on a completely new machine.
+
+The measured GPT-2 weight file is 548,105,171 bytes (548.11 decimal MB). That excludes PyTorch, tokenizer files, and the service itself. A 512 MB hosting allowance would not accommodate the loaded model and its runtime, so I kept the service local.
+
+
+**Instrumentation**
+
+`request_instrumentation.py::install_request_logging` captures `/submit`
+and `/appeal` requests. `request_audit.py::write_request` appends UTF-8
+JSON Lines to `logs/requests.jsonl`. Records hold a UTC timestamp,
+request ID, route, method, input body and parsed JSON, response,
+HTTP status, and duration in seconds.
+
+The existing decision audit remains separate. Rejected inputs and rate
+limits pass through the response logger. Unexpected server errors receive
+a generic JSON 500 response; the traceback remains in the server error
+output. A separately simulated detector failure was also checked.
+
+Duration covers the request hook through the start of the response hook.
+It excludes the log write and response transfer. The evaluation-only
+`capstone_test_server.py::observed_clock` takes independent nanosecond
+clock readings adjacent to the instrumentation clock readings at the
+same boundaries. It checks elapsed-time agreement, not whether those
+boundaries cover the complete HTTP lifecycle.
+
+These are ten actual after-trial-1 request records:
+```json
+[
+  {
+    "timestamp": "2026-11-18T05:28:33.425490+00:00",
+    "request_id": "7ca32a3a-16ed-4f05-9e85-7b20c88217cd",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.\", \"creator_id\": \"capstone-4a11d557edd2-valid_1\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.",
+        "creator_id": "capstone-4a11d557edd2-valid_1"
+      }
+    },
+    "output": {
+      "confidence": 0.6377999999999999,
+      "content_id": "8e8757cc-1c7c-4cc4-a786-487ca497e279",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6583,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.09849179099546745
+  },
+  {
+    "timestamp": "2026-11-18T05:28:33.528192+00:00",
+    "request_id": "4f24e8ca-6433-4352-ab0b-e209aad17b40",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 2.\", \"creator_id\": \"capstone-4a11d557edd2-valid_2\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 2.",
+        "creator_id": "capstone-4a11d557edd2-valid_2"
+      }
+    },
+    "output": {
+      "confidence": 0.6375500000000001,
+      "content_id": "b2fe61b2-c4dd-4ed6-98bb-68e3b3d4c482",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6578,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.09983500000089407
+  },
+  {
+    "timestamp": "2026-11-18T05:28:33.620203+00:00",
+    "request_id": "56746e74-b1dc-45f4-9ecd-848b23a084de",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 3.\", \"creator_id\": \"capstone-4a11d557edd2-valid_3\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 3.",
+        "creator_id": "capstone-4a11d557edd2-valid_3"
+      }
+    },
+    "output": {
+      "confidence": 0.6368,
+      "content_id": "fa358c7a-1714-4526-983a-1fa7e517c068",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6563,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.08927237504394725
+  },
+  {
+    "timestamp": "2026-11-18T05:28:33.715031+00:00",
+    "request_id": "f8ebe8a8-1ed1-4e0b-aa9d-53e67c383d83",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 4.\", \"creator_id\": \"capstone-4a11d557edd2-valid_4\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 4.",
+        "creator_id": "capstone-4a11d557edd2-valid_4"
+      }
+    },
+    "output": {
+      "confidence": 0.63625,
+      "content_id": "e942ab2d-5bc8-4778-8f60-2626ef577cc6",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6552,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.09172337502241135
+  },
+  {
+    "timestamp": "2026-11-18T05:28:33.815709+00:00",
+    "request_id": "1dc73684-e94f-4333-8946-85b97e28d6d0",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 5.\", \"creator_id\": \"capstone-4a11d557edd2-valid_5\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 5.",
+        "creator_id": "capstone-4a11d557edd2-valid_5"
+      }
+    },
+    "output": {
+      "confidence": 0.63575,
+      "content_id": "6a6f111d-27c7-43d0-b281-99178d76a0db",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6542,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.0976552499923855
+  },
+  {
+    "timestamp": "2026-11-18T05:28:33.912715+00:00",
+    "request_id": "96f1b2fb-5aca-4256-a29d-a0b8fff5abad",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 6.\", \"creator_id\": \"capstone-4a11d557edd2-valid_6\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 6.",
+        "creator_id": "capstone-4a11d557edd2-valid_6"
+      }
+    },
+    "output": {
+      "confidence": 0.6349499999999999,
+      "content_id": "b9c8376d-ceed-4907-bfb4-2ba96e9c24e6",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6526,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.09392291604308411
+  },
+  {
+    "timestamp": "2026-11-18T05:28:34.006912+00:00",
+    "request_id": "f2252a94-a79f-431e-85c1-91bce3e6545c",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 7.\", \"creator_id\": \"capstone-4a11d557edd2-valid_7\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 7.",
+        "creator_id": "capstone-4a11d557edd2-valid_7"
+      }
+    },
+    "output": {
+      "confidence": 0.6345,
+      "content_id": "f5a1d424-40ba-476a-9657-5c87198817e3",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6517,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.09146870800759643
+  },
+  {
+    "timestamp": "2026-11-18T05:28:34.097822+00:00",
+    "request_id": "f9b2793d-63e9-47c5-9fcd-6adccf54c075",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 8.\", \"creator_id\": \"capstone-4a11d557edd2-valid_8\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 8.",
+        "creator_id": "capstone-4a11d557edd2-valid_8"
+      }
+    },
+    "output": {
+      "confidence": 0.63445,
+      "content_id": "56cd338d-d84a-4a6a-af68-47bfd2087c6a",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6516,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.08803633396746591
+  },
+  {
+    "timestamp": "2026-11-18T05:28:34.192949+00:00",
+    "request_id": "f777e7bf-ebb9-4cef-b15f-e504a354df1e",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 9.\", \"creator_id\": \"capstone-4a11d557edd2-valid_9\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 9.",
+        "creator_id": "capstone-4a11d557edd2-valid_9"
+      }
+    },
+    "output": {
+      "confidence": 0.6345,
+      "content_id": "a949d822-60f7-4eb1-abba-677eea410747",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6517,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.09229154099011794
+  },
+  {
+    "timestamp": "2026-11-18T05:28:34.287407+00:00",
+    "request_id": "cf8a0165-8ea1-4f63-acf4-9a31148e80ba",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 10.\", \"creator_id\": \"capstone-4a11d557edd2-valid_10\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 10.",
+        "creator_id": "capstone-4a11d557edd2-valid_10"
+      }
+    },
+    "output": {
+      "confidence": 0.63515,
+      "content_id": "04c616f7-8e30-4057-bcc5-b4c1b1c39f64",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.653,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.09143349999794737
+  }
+]
+```
+
+Actual rejected request from that trial:
+```json
+{
+  "timestamp": "2026-11-18T05:28:34.290605+00:00",
+  "request_id": "8a8ddb0a-9180-41ac-920f-9a728bda85da",
+  "route": "/submit",
+  "method": "POST",
+  "input": {
+    "content_type": "application/json",
+    "body": "{\"creator_id\": \"capstone-4a11d557edd2-missing_text\"}",
+    "json": {
+      "creator_id": "capstone-4a11d557edd2-missing_text"
+    }
+  },
+  "output": {
+    "error": "invalid_text",
+    "message": "Text is required and must be a nonempty string."
+  },
+  "status_code": 400,
+  "duration_seconds": 0.0003632080042734742
+}
+```
+
+Separately simulated detector exception, not a natural outage:
+```json
+{
+  "timestamp": "2026-11-18T04:10:42.898827+00:00",
+  "request_id": "fdcbc066-3127-409c-9ee5-ddb1c6f93554",
+  "route": "/submit",
+  "method": "POST",
+  "input": {
+    "content_type": "application/json",
+    "body": "{\"creator_id\": \"failure-smoke-1ec904ded1\", \"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.\"}",
+    "json": {
+      "creator_id": "failure-smoke-1ec904ded1",
+      "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1."
+    }
+  },
+  "output": {
+    "error": "internal_server_error",
+    "message": "The request could not be completed."
+  },
+  "status_code": 500,
+  "duration_seconds": 0.00502983300248161
+}
+```
+
+**What It Costs**
+
+I measured elapsed processing time rather than API dollars, CPU time, or electricity. No hosted model API is called. Each trial measured ten valid warm submissions after a separate warm-up request. The reported average combines all 30 warm submissions per phase.
+
+Before: 0.092914 server seconds per request and 0.094712 client seconds.
+
+After: 0.091731 server seconds per request and 0.093456 client seconds.
+
+For 100 people making one submission each per day, the after-run arithmetic is 0.091731 × 100 = 9.173 seconds of accumulated server processing per day. This assumes the same inputs, hardware, and warm model. It excludes startup, idle time, concurrency effects, log-writing time, and additional submissions or appeals.
+
+**Run Log and Verdicts**
+
+Before-improvement results:
+| Criterion | Target | Trial 1 | Trial 2 | Trial 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. Complete and accurate valid-request logs | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 2. Accurate failed-request logs | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 3. Logs preserved after restart | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 4. Successful warm submissions within 2 seconds | At least 9/10 | 10/10 | 10/10 | 10/10 | MET |
+| 5. Existing submission behavior preserved | 20/20 | 20/20 | 20/20 | 20/20 | MET |
+
+All five targets were met in all three trials; there were no missed
+criteria to diagnose. The latency target was generous for this workload.
+The ten valid fixtures are closely related synthetic paragraphs, not
+a representative authorship dataset. These results establish behavior
+for these cases, not general detector accuracy.
+
+`capstone_eval.py` compares actual responses against the original
+pre-instrumentation baseline, excluding generated content IDs.
+`capstone_restart_check.py` checks field equality and exactly one
+occurrence after a manual normal stop and restart. The before-phase
+restart checks used equivalent inline Python, preserved in the resulting
+evidence files. No criterion target was changed after seeing results.
+
+Actual evidence for each criterion, from before trial 1:
+
+1. Logging and reference timing, produced by the request hooks and
+`capstone_test_server.py::observed_clock`:
+```json
+{
+  "case": "valid_1",
+  "request_record": {
+    "timestamp": "2026-11-18T05:15:33.889261+00:00",
+    "request_id": "c1c00972-84f4-4b5d-98a8-791cb705a6dd",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.\", \"creator_id\": \"capstone-738e165d2d56-valid_1\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.",
+        "creator_id": "capstone-738e165d2d56-valid_1"
+      }
+    },
+    "output": {
+      "confidence": 0.6377999999999999,
+      "content_id": "8bb97cec-44b8-4f07-9774-b491afd02c5e",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6583,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 0.09475620900047943
+  },
+  "reference_record": {
+    "request_id": "c1c00972-84f4-4b5d-98a8-791cb705a6dd",
+    "route": "/submit",
+    "reference_duration_seconds": 0.094756209,
+    "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+  },
+  "relative_timing_error": 5.059678309804121e-12,
+  "log_correct": true
+}
+```
+
+2. Rejection response and log, from `app.py::submit` and the hooks:
+```json
+{
+  "case": "missing_text",
+  "input": {
+    "creator_id": "capstone-738e165d2d56-missing_text"
+  },
+  "status_code": 400,
+  "output": {
+    "error": "invalid_text",
+    "message": "Text is required and must be a nonempty string."
+  },
+  "client_seconds": 0.0018134589772671461,
+  "request_record": {
+    "timestamp": "2026-11-18T05:15:34.730400+00:00",
+    "request_id": "c7fc3d11-0bd0-4704-9ea5-76bf13d32fa3",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"creator_id\": \"capstone-738e165d2d56-missing_text\"}",
+      "json": {
+        "creator_id": "capstone-738e165d2d56-missing_text"
+      }
+    },
+    "output": {
+      "error": "invalid_text",
+      "message": "Text is required and must be a nonempty string."
+    },
+    "status_code": 400,
+    "duration_seconds": 0.0003747920272871852
+  },
+  "reference_record": {
+    "request_id": "c7fc3d11-0bd0-4704-9ea5-76bf13d32fa3",
+    "route": "/submit",
+    "reference_duration_seconds": 0.000374875,
+    "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+  },
+  "relative_timing_error": 0.00022133434562133806,
+  "log_correct": true,
+  "behavior_matches": true
+}
+```
+
+3. Restart comparison output from the before-trial-1 checker:
+```json
+{
+  "label": "before",
+  "trial": 1,
+  "checked_at": "2026-11-18T05:17:16.554000+00:00",
+  "procedure": "Manually stopped and restarted Gunicorn before checking",
+  "preserved": 10,
+  "total": 10,
+  "checks": [
+    {
+      "request_id": "c1c00972-84f4-4b5d-98a8-791cb705a6dd",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "1bb85266-899a-486a-93c2-77e519068efa",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "aa975ef9-e56d-4244-8211-a81e9bcfd068",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "a76397f9-5c54-4483-bcb3-329b818ab723",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "09df2c1a-e499-42c2-9039-cb5003702151",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "d35ce22d-a79a-4a3f-bfe1-9537e310b2f4",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "0d318a3b-2a7f-496d-82bc-4dab5d5442eb",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "16e029db-e689-4e32-9720-9ab72b995ff6",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "cafe9493-2c18-428a-9b31-bfb664a6a135",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "fa824b90-38cf-47f2-b019-9be192f99ab6",
+      "preserved_exactly_once": true
+    }
+  ]
+}
+```
+
+4. Actual client timing from `capstone_eval.py`:
+```json
+{
+  "case": "valid_1",
+  "status_code": 200,
+  "client_seconds": 0.09621433302527294
+}
+```
+
+5. Actual original/current responses compared by `capstone_eval.py`:
+```json
+{
+  "original_response": {
+    "confidence": 0.6377999999999999,
+    "content_id": "0f853d14-30aa-4357-9d73-15b3db608c7f",
+    "guess": "unsure",
+    "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+    "model_score": 0.6583,
+    "style_score": 0.6173
+  },
+  "instrumented_response": {
+    "confidence": 0.6377999999999999,
+    "content_id": "8bb97cec-44b8-4f07-9774-b491afd02c5e",
+    "guess": "unsure",
+    "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+    "model_score": 0.6583,
+    "style_score": 0.6173
+  },
+  "matching_except_generated_id": true
+}
+```
+
+**The Improvement**
+
+No criterion failed, so I chose a small storage improvement:
+`request_audit.py::write_request` now uses compact JSON separators.
+The only service-code change removed optional JSON spacing.
+All fields and parsed values were retained. Existing log lines were
+left intact.
+
+This addressed repeated serialization overhead in an append-only log.
+It was not a fix for an observed detector or logging failure.
+
+After-improvement results:
+| Criterion | Target | Trial 1 | Trial 2 | Trial 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. Complete and accurate valid-request logs | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 2. Accurate failed-request logs | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 3. Logs preserved after restart | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 4. Successful warm submissions within 2 seconds | At least 9/10 | 10/10 | 10/10 | 10/10 | MET |
+| 5. Existing submission behavior preserved | 20/20 | 20/20 | 20/20 | 20/20 | MET |
+
+Side-by-side results:
+
+| Criterion | Before trials 1 / 2 / 3 | After trials 1 / 2 / 3 |
+|---|---|---|
+| Complete and accurate valid-request logs (out of 10) | 10 / 10 / 10 | 10 / 10 / 10 |
+| Accurate failed-request logs (out of 10) | 10 / 10 / 10 | 10 / 10 / 10 |
+| Logs preserved after restart (out of 10) | 10 / 10 / 10 | 10 / 10 / 10 |
+| Successful warm submissions within 2 seconds (out of 10) | 10 / 10 / 10 | 10 / 10 / 10 |
+| Existing submission behavior preserved (out of 20) | 20 / 20 / 20 | 20 / 20 / 20 |
+
+Actual records averaged 2364.07 bytes before and 2334.25 bytes after, a 1.26% decrease. Sizes include the UTF-8 newline. To isolate formatting from changing IDs, timestamps, and durations, I also serialized the exact same 60 after-run records both ways: 141,843 bytes with default spacing versus 140,055 compact, a 1.26% reduction.
+
+The change helped storage modestly and preserved all five tested behaviors. Response-time averages were similar; these runs do not establish a speed improvement. Compact lines are less comfortable to read directly, although they still parse and can be pretty-printed.
+
+**What's Still Broken**
+
+No acceptance criterion remained missed. I would tighten criterion 4
+from at least 9/10 under 2 seconds to at least 9/10 under 0.2 seconds
+for this same warm, sequential, 100–200-word workload. This is a future
+target, not a revision to the original criterion.
+
+The tests used closely related valid inputs and ten specific invalid
+cases. They do not establish performance across varied writing,
+concurrent clients, or heavy load. Appeals and a detector exception
+received smoke checks, not the full three-trial submission evaluation.
+Rate-limit logging was implemented but was not deliberately exercised
+in this capstone evaluation.
+
+The writer is intended for one worker. A thread lock does not coordinate
+multiple processes. Normal restarts preserved records, but abrupt power
+loss, full disks, and failed log writes were not tested. Logs contain
+submitted text, so a real deployment would also need access and
+retention decisions.
+
+I stopped after one measured change and the required before/after cycle
+to keep the declared scope bounded. The existing detector's authorship
+limitations remain; adding logs does not improve its accuracy.
+
+With another unit, I would first replace the near-identical valid
+fixtures with a more varied fixed workload spanning the allowed input
+lengths. That would make the latency and regression evidence more useful
+before considering additional deployment work.
+
+**How I Used AI**
+
+I asked for help making my acceptance statements testable and
+evaluating the extension. I chose and wrote the criteria through that
+discussion, including 10/10 logging, a 10% timing tolerance, restart
+preservation, the 2-second target, and unchanged submission behavior.
+The compact-JSON improvement was also suggested by ChatGPT. I ran it
+and measured its actual storage effect rather than assuming it helped.

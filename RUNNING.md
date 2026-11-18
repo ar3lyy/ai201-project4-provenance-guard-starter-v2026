@@ -381,4 +381,6 @@ and logged a submission. This check reused the machine's existing model
 cache. Evidence is saved in
 `results/capstone/clean_checkout_verification.json`.
 
-The full three-trial acceptance evaluation is still pending.
+The full before/after evaluation is complete: all five criteria met their targets in each of three trials per phase. Detailed results are under README.md's Capstone heading and in results/capstone/.
+
+Measured GPT-2 weights: `model.safetensors`, 548,105,171 bytes (548.11 decimal MB). This excludes tokenizer and other cache files. See `results/capstone/model_size.json`.
