@@ -1,0 +1,50 @@
+{
+  "label": "after",
+  "trial": 1,
+  "checked_at": "2026-11-18T05:29:36.334343+00:00",
+  "procedure": "Manually stopped and restarted Gunicorn before checking",
+  "preserved": 10,
+  "total": 10,
+  "checks": [
+    {
+      "request_id": "7ca32a3a-16ed-4f05-9e85-7b20c88217cd",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "4f24e8ca-6433-4352-ab0b-e209aad17b40",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "56746e74-b1dc-45f4-9ecd-848b23a084de",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "f8ebe8a8-1ed1-4e0b-aa9d-53e67c383d83",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "1dc73684-e94f-4333-8946-85b97e28d6d0",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "96f1b2fb-5aca-4256-a29d-a0b8fff5abad",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "f2252a94-a79f-431e-85c1-91bce3e6545c",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "f9b2793d-63e9-47c5-9fcd-6adccf54c075",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "f777e7bf-ebb9-4cef-b15f-e504a354df1e",
+      "preserved_exactly_once": true
+    },
+    {
+      "request_id": "cf8a0165-8ea1-4f63-acf4-9a31148e80ba",
+      "preserved_exactly_once": true
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "before": {
+    "trials": [
+      {
+        "trial": 1,
+        "summary": {
+          "criterion_1_correct_valid_logs": 10,
+          "criterion_2_correct_failure_logs": 10,
+          "criterion_3_restart": "PENDING actual service restart",
+          "criterion_4_successful_requests_within_2s": 10,
+          "criterion_5_matching_responses": 20,
+          "mean_warm_client_seconds": 0.09321663330774754,
+          "mean_warm_server_seconds": 0.09137042500078678
+        },
+        "restart_preserved": 10,
+        "total_log_bytes": 47283,
+        "mean_bytes_per_record": 2364.15
+      },
+      {
+        "trial": 2,
+        "summary": {
+          "criterion_1_correct_valid_logs": 10,
+          "criterion_2_correct_failure_logs": 10,
+          "criterion_3_restart": "PENDING actual service restart",
+          "criterion_4_successful_requests_within_2s": 10,
+          "criterion_5_matching_responses": 20,
+          "mean_warm_client_seconds": 0.09602744579897263,
+          "mean_warm_server_seconds": 0.09419797079171985
+        },
+        "restart_preserved": 10,
+        "total_log_bytes": 47280,
+        "mean_bytes_per_record": 2364.0
+      },
+      {
+        "trial": 3,
+        "summary": {
+          "criterion_1_correct_valid_logs": 10,
+          "criterion_2_correct_failure_logs": 10,
+          "criterion_3_restart": "PENDING actual service restart",
+          "criterion_4_successful_requests_within_2s": 10,
+          "criterion_5_matching_responses": 20,
+          "mean_warm_client_seconds": 0.09489048330578953,
+          "mean_warm_server_seconds": 0.09317469169618561
+        },
+        "restart_preserved": 10,
+        "total_log_bytes": 47281,
+        "mean_bytes_per_record": 2364.05
+      }
+    ],
+    "mean_bytes_per_record": 2364.0666666666666,
+    "warm_requests_measured": 30,
+    "mean_client_seconds": 0.0947115208041699,
+    "mean_server_processing_seconds": 0.09291436249623075,
+    "server_seconds_for_100_requests": 9.291436249623075
+  },
+  "after": {
+    "trials": [
+      {
+        "trial": 1,
+        "summary": {
+          "criterion_1_correct_valid_logs": 10,
+          "criterion_2_correct_failure_logs": 10,
+          "criterion_3_restart": "PENDING actual service restart",
+          "criterion_4_successful_requests_within_2s": 10,
+          "criterion_5_matching_responses": 20,
+          "mean_warm_client_seconds": 0.09513143760850654,
+          "mean_warm_server_seconds": 0.09341307900613174
+        },
+        "restart_preserved": 10,
+        "total_log_bytes": 46685,
+        "mean_bytes_per_record": 2334.25
+      },
+      {
+        "trial": 2,
+        "summary": {
+          "criterion_1_correct_valid_logs": 10,
+          "criterion_2_correct_failure_logs": 10,
+          "criterion_3_restart": "PENDING actual service restart",
+          "criterion_4_successful_requests_within_2s": 10,
+          "criterion_5_matching_responses": 20,
+          "mean_warm_client_seconds": 0.09219576250761748,
+          "mean_warm_server_seconds": 0.0904246539925225
+        },
+        "restart_preserved": 10,
+        "total_log_bytes": 46686,
+        "mean_bytes_per_record": 2334.3
+      },
+      {
+        "trial": 3,
+        "summary": {
+          "criterion_1_correct_valid_logs": 10,
+          "criterion_2_correct_failure_logs": 10,
+          "criterion_3_restart": "PENDING actual service restart",
+          "criterion_4_successful_requests_within_2s": 10,
+          "criterion_5_matching_responses": 20,
+          "mean_warm_client_seconds": 0.09304205421940423,
+          "mean_warm_server_seconds": 0.09135667059454136
+        },
+        "restart_preserved": 10,
+        "total_log_bytes": 46684,
+        "mean_bytes_per_record": 2334.2
+      }
+    ],
+    "mean_bytes_per_record": 2334.25,
+    "warm_requests_measured": 30,
+    "mean_client_seconds": 0.09345641811184274,
+    "mean_server_processing_seconds": 0.09173146786439854,
+    "server_seconds_for_100_requests": 9.173146786439853
+  },
+  "storage_reduction_percent": 1.261244747751048,
+  "same_records_formatting_comparison": {
+    "default_bytes": 141843,
+    "compact_bytes": 140055,
+    "reduction_percent": 1.2605486347581483
+  }
+}

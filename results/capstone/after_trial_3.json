@@ -1,0 +1,1177 @@
+{
+  "label": "after",
+  "trial": 3,
+  "summary": {
+    "criterion_1_correct_valid_logs": 10,
+    "criterion_2_correct_failure_logs": 10,
+    "criterion_3_restart": "PENDING actual service restart",
+    "criterion_4_successful_requests_within_2s": 10,
+    "criterion_5_matching_responses": 20,
+    "mean_warm_client_seconds": 0.09304205421940423,
+    "mean_warm_server_seconds": 0.09135667059454136
+  },
+  "requests": [
+    {
+      "case": "valid_1",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.",
+        "creator_id": "capstone-ffe55e9e871e-valid_1"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.6377999999999999,
+        "content_id": "999aeda4-4f76-4d2f-994a-f0bea8bceeee",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6583,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09715216601034626,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:31.632233+00:00",
+        "request_id": "1805eb23-caf1-4d3b-9b1f-ed5c3dcdc582",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_1\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.",
+            "creator_id": "capstone-ffe55e9e871e-valid_1"
+          }
+        },
+        "output": {
+          "confidence": 0.6377999999999999,
+          "content_id": "999aeda4-4f76-4d2f-994a-f0bea8bceeee",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6583,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.09548974997596815
+      },
+      "reference_record": {
+        "request_id": "1805eb23-caf1-4d3b-9b1f-ed5c3dcdc582",
+        "route": "/submit",
+        "reference_duration_seconds": 0.095489791,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 4.296169404343199e-07,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_2",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 2.",
+        "creator_id": "capstone-ffe55e9e871e-valid_2"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.6375500000000001,
+        "content_id": "eb309ad1-2776-4f9d-b558-2ff07a2e6342",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6578,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09520941704977304,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:31.730067+00:00",
+        "request_id": "07baad27-7351-4911-93e4-0db3d33a76b4",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 2.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_2\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 2.",
+            "creator_id": "capstone-ffe55e9e871e-valid_2"
+          }
+        },
+        "output": {
+          "confidence": 0.6375500000000001,
+          "content_id": "eb309ad1-2776-4f9d-b558-2ff07a2e6342",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6578,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.09357162495143712
+      },
+      "reference_record": {
+        "request_id": "07baad27-7351-4911-93e4-0db3d33a76b4",
+        "route": "/submit",
+        "reference_duration_seconds": 0.09357175,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 1.3363922645407108e-06,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_3",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 3.",
+        "creator_id": "capstone-ffe55e9e871e-valid_3"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.6368,
+        "content_id": "502d56c4-8ffa-4644-bcde-43d131a08289",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6563,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09744120901450515,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:31.829050+00:00",
+        "request_id": "09a907bd-23bd-43dc-8707-ff68f2ed1dc5",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 3.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_3\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 3.",
+            "creator_id": "capstone-ffe55e9e871e-valid_3"
+          }
+        },
+        "output": {
+          "confidence": 0.6368,
+          "content_id": "502d56c4-8ffa-4644-bcde-43d131a08289",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6563,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.09573754097800702
+      },
+      "reference_record": {
+        "request_id": "09a907bd-23bd-43dc-8707-ff68f2ed1dc5",
+        "route": "/submit",
+        "reference_duration_seconds": 0.095737583,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 4.3892891031657575e-07,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_4",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 4.",
+        "creator_id": "capstone-ffe55e9e871e-valid_4"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.63625,
+        "content_id": "93dcb74b-557f-4036-a26d-fcdc9943cbf7",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6552,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09208904101978987,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:31.922765+00:00",
+        "request_id": "e68ff6da-09b0-4732-9db7-9658e70b20f0",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 4.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_4\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 4.",
+            "creator_id": "capstone-ffe55e9e871e-valid_4"
+          }
+        },
+        "output": {
+          "confidence": 0.63625,
+          "content_id": "93dcb74b-557f-4036-a26d-fcdc9943cbf7",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6552,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.09037658298620954
+      },
+      "reference_record": {
+        "request_id": "e68ff6da-09b0-4732-9db7-9658e70b20f0",
+        "route": "/submit",
+        "reference_duration_seconds": 0.090376708,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 1.3832523138426727e-06,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_5",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 5.",
+        "creator_id": "capstone-ffe55e9e871e-valid_5"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.63575,
+        "content_id": "c5d9b6b6-bf87-46ec-a7ff-e6a60e087af1",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6542,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09033900004578754,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.014769+00:00",
+        "request_id": "021153be-ed11-43db-a502-5ccc17b6bc2a",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 5.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_5\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 5.",
+            "creator_id": "capstone-ffe55e9e871e-valid_5"
+          }
+        },
+        "output": {
+          "confidence": 0.63575,
+          "content_id": "c5d9b6b6-bf87-46ec-a7ff-e6a60e087af1",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6542,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.08868995803641155
+      },
+      "reference_record": {
+        "request_id": "021153be-ed11-43db-a502-5ccc17b6bc2a",
+        "route": "/submit",
+        "reference_duration_seconds": 0.088690083,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 1.4089916732772393e-06,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_6",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 6.",
+        "creator_id": "capstone-ffe55e9e871e-valid_6"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.6349499999999999,
+        "content_id": "6582024a-62c9-4335-bf07-d7a0d5ecf989",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6526,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09226991701871157,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.108667+00:00",
+        "request_id": "45eb8f0c-ebfd-4c87-97c9-402135c4f631",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 6.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_6\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 6.",
+            "creator_id": "capstone-ffe55e9e871e-valid_6"
+          }
+        },
+        "output": {
+          "confidence": 0.6349499999999999,
+          "content_id": "6582024a-62c9-4335-bf07-d7a0d5ecf989",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6526,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.09062454104423523
+      },
+      "reference_record": {
+        "request_id": "45eb8f0c-ebfd-4c87-97c9-402135c4f631",
+        "route": "/submit",
+        "reference_duration_seconds": 0.090624625,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 9.264122722805934e-07,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_7",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 7.",
+        "creator_id": "capstone-ffe55e9e871e-valid_7"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.6345,
+        "content_id": "48cf9ca7-d146-406a-ba9e-41cb10cfb175",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6517,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09069333400111645,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.200975+00:00",
+        "request_id": "08ab91fc-916b-4f21-978f-25b0d8317b5c",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 7.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_7\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 7.",
+            "creator_id": "capstone-ffe55e9e871e-valid_7"
+          }
+        },
+        "output": {
+          "confidence": 0.6345,
+          "content_id": "48cf9ca7-d146-406a-ba9e-41cb10cfb175",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6517,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.0890149159822613
+      },
+      "reference_record": {
+        "request_id": "08ab91fc-916b-4f21-978f-25b0d8317b5c",
+        "route": "/submit",
+        "reference_duration_seconds": 0.089015,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 9.438604583139665e-07,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_8",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 8.",
+        "creator_id": "capstone-ffe55e9e871e-valid_8"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.63445,
+        "content_id": "ea09eec8-5864-4537-9250-d678d4e9b1c7",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6516,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09097125002881512,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.293596+00:00",
+        "request_id": "ed51142c-02bd-4ed0-a566-f70b94e79fdb",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 8.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_8\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 8.",
+            "creator_id": "capstone-ffe55e9e871e-valid_8"
+          }
+        },
+        "output": {
+          "confidence": 0.63445,
+          "content_id": "ea09eec8-5864-4537-9250-d678d4e9b1c7",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6516,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.08928529202239588
+      },
+      "reference_record": {
+        "request_id": "ed51142c-02bd-4ed0-a566-f70b94e79fdb",
+        "route": "/submit",
+        "reference_duration_seconds": 0.089285333,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 4.589511259982361e-07,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_9",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 9.",
+        "creator_id": "capstone-ffe55e9e871e-valid_9"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.6345,
+        "content_id": "c43ec0e4-121d-445f-acce-263c2468ef76",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6517,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.09304979199077934,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.388236+00:00",
+        "request_id": "54d4d8f7-8fd9-4fea-b5c4-075d8f5ffefc",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 9.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_9\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 9.",
+            "creator_id": "capstone-ffe55e9e871e-valid_9"
+          }
+        },
+        "output": {
+          "confidence": 0.6345,
+          "content_id": "c43ec0e4-121d-445f-acce-263c2468ef76",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.6517,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.0912898329552263
+      },
+      "reference_record": {
+        "request_id": "54d4d8f7-8fd9-4fea-b5c4-075d8f5ffefc",
+        "route": "/submit",
+        "reference_duration_seconds": 0.091289875,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 4.6056338344516476e-07,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "valid_10",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 10.",
+        "creator_id": "capstone-ffe55e9e871e-valid_10"
+      },
+      "status_code": 200,
+      "output": {
+        "confidence": 0.63515,
+        "content_id": "22d03855-f668-4e36-a947-5695271056f8",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.653,
+        "style_score": 0.6173
+      },
+      "client_seconds": 0.091205416014418,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.481193+00:00",
+        "request_id": "ad139e37-7c09-4f96-b1c5-51c5f50c828e",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 10.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_10\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 10.",
+            "creator_id": "capstone-ffe55e9e871e-valid_10"
+          }
+        },
+        "output": {
+          "confidence": 0.63515,
+          "content_id": "22d03855-f668-4e36-a947-5695271056f8",
+          "guess": "unsure",
+          "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+          "model_score": 0.653,
+          "style_score": 0.6173
+        },
+        "status_code": 200,
+        "duration_seconds": 0.08948666701326147
+      },
+      "reference_record": {
+        "request_id": "ad139e37-7c09-4f96-b1c5-51c5f50c828e",
+        "route": "/submit",
+        "reference_duration_seconds": 0.089486667,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 1.4819482966643072e-10,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "missing_text",
+      "input": {
+        "creator_id": "capstone-ffe55e9e871e-missing_text"
+      },
+      "status_code": 400,
+      "output": {
+        "error": "invalid_text",
+        "message": "Text is required and must be a nonempty string."
+      },
+      "client_seconds": 0.0018008750048466027,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.484899+00:00",
+        "request_id": "26ee62ad-add9-46ca-9a96-4249dadd9add",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"creator_id\": \"capstone-ffe55e9e871e-missing_text\"}",
+          "json": {
+            "creator_id": "capstone-ffe55e9e871e-missing_text"
+          }
+        },
+        "output": {
+          "error": "invalid_text",
+          "message": "Text is required and must be a nonempty string."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.00035245897015556693
+      },
+      "reference_record": {
+        "request_id": "26ee62ad-add9-46ca-9a96-4249dadd9add",
+        "route": "/submit",
+        "reference_duration_seconds": 0.0003525,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.00011639672179594959,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "null_text",
+      "input": {
+        "text": null,
+        "creator_id": "capstone-ffe55e9e871e-null_text"
+      },
+      "status_code": 400,
+      "output": {
+        "error": "invalid_text",
+        "message": "Text is required and must be a nonempty string."
+      },
+      "client_seconds": 0.0014407499693334103,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.487904+00:00",
+        "request_id": "d055f05b-adf5-44d2-ab71-7f7f82d9b7a8",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": null, \"creator_id\": \"capstone-ffe55e9e871e-null_text\"}",
+          "json": {
+            "text": null,
+            "creator_id": "capstone-ffe55e9e871e-null_text"
+          }
+        },
+        "output": {
+          "error": "invalid_text",
+          "message": "Text is required and must be a nonempty string."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.00021841598208993673
+      },
+      "reference_record": {
+        "request_id": "d055f05b-adf5-44d2-ab71-7f7f82d9b7a8",
+        "route": "/submit",
+        "reference_duration_seconds": 0.000218458,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.00019233861915450318,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "blank_text",
+      "input": {
+        "text": "   ",
+        "creator_id": "capstone-ffe55e9e871e-blank_text"
+      },
+      "status_code": 400,
+      "output": {
+        "error": "invalid_text",
+        "message": "Text is required and must be a nonempty string."
+      },
+      "client_seconds": 0.0012802499695681036,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.491066+00:00",
+        "request_id": "7e9736d7-f530-42ff-b2ea-5effdca89ccb",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"   \", \"creator_id\": \"capstone-ffe55e9e871e-blank_text\"}",
+          "json": {
+            "text": "   ",
+            "creator_id": "capstone-ffe55e9e871e-blank_text"
+          }
+        },
+        "output": {
+          "error": "invalid_text",
+          "message": "Text is required and must be a nonempty string."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.00020650000078603625
+      },
+      "reference_record": {
+        "request_id": "7e9736d7-f530-42ff-b2ea-5effdca89ccb",
+        "route": "/submit",
+        "reference_duration_seconds": 0.0002065,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 3.806470934752047e-09,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "numeric_text",
+      "input": {
+        "text": 123,
+        "creator_id": "capstone-ffe55e9e871e-numeric_text"
+      },
+      "status_code": 400,
+      "output": {
+        "error": "invalid_text",
+        "message": "Text is required and must be a nonempty string."
+      },
+      "client_seconds": 0.0013772909878753126,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.494058+00:00",
+        "request_id": "fc0848a3-b617-4ed0-85f2-1648acd2d818",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": 123, \"creator_id\": \"capstone-ffe55e9e871e-numeric_text\"}",
+          "json": {
+            "text": 123,
+            "creator_id": "capstone-ffe55e9e871e-numeric_text"
+          }
+        },
+        "output": {
+          "error": "invalid_text",
+          "message": "Text is required and must be a nonempty string."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.00024575000861659646
+      },
+      "reference_record": {
+        "request_id": "fc0848a3-b617-4ed0-85f2-1648acd2d818",
+        "route": "/submit",
+        "reference_duration_seconds": 0.000245792,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.00017084113154021958,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "list_text",
+      "input": {
+        "text": [
+          "writing"
+        ],
+        "creator_id": "capstone-ffe55e9e871e-list_text"
+      },
+      "status_code": 400,
+      "output": {
+        "error": "invalid_text",
+        "message": "Text is required and must be a nonempty string."
+      },
+      "client_seconds": 0.0013535409816540778,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.497401+00:00",
+        "request_id": "351d28d9-a31a-4451-a12b-95b30483e05e",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": [\"writing\"], \"creator_id\": \"capstone-ffe55e9e871e-list_text\"}",
+          "json": {
+            "text": [
+              "writing"
+            ],
+            "creator_id": "capstone-ffe55e9e871e-list_text"
+          }
+        },
+        "output": {
+          "error": "invalid_text",
+          "message": "Text is required and must be a nonempty string."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.0002887500450015068
+      },
+      "reference_record": {
+        "request_id": "351d28d9-a31a-4451-a12b-95b30483e05e",
+        "route": "/submit",
+        "reference_duration_seconds": 0.000288875,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.00043255732927117123,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "short_text",
+      "input": {
+        "text": "Too short.",
+        "creator_id": "capstone-ffe55e9e871e-short_text"
+      },
+      "status_code": 400,
+      "output": {
+        "error": "text_too_short",
+        "message": "Text must contain at least 50 characters."
+      },
+      "client_seconds": 0.001125000009778887,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.500156+00:00",
+        "request_id": "451e9f70-d770-4420-90d2-2d49351f8e4e",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Too short.\", \"creator_id\": \"capstone-ffe55e9e871e-short_text\"}",
+          "json": {
+            "text": "Too short.",
+            "creator_id": "capstone-ffe55e9e871e-short_text"
+          }
+        },
+        "output": {
+          "error": "text_too_short",
+          "message": "Text must contain at least 50 characters."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.0001789579982869327
+      },
+      "reference_record": {
+        "request_id": "451e9f70-d770-4420-90d2-2d49351f8e4e",
+        "route": "/submit",
+        "reference_duration_seconds": 0.000179,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.00023464644171664915,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "oversized_text",
+      "input": {
+        "text": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "creator_id": "capstone-ffe55e9e871e-oversized_text"
+      },
+      "status_code": 413,
+      "output": {
+        "error": "text_too_long",
+        "message": "Text must contain no more than 10,000 characters."
+      },
+      "client_seconds": 0.0013387090293690562,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.503127+00:00",
+        "request_id": "e13de2fd-315e-4065-9fda-911bf438a706",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\", \"creator_id\": \"capstone-ffe55e9e871e-oversized_text\"}",
+          "json": {
+            "text": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "creator_id": "capstone-ffe55e9e871e-oversized_text"
+          }
+        },
+        "output": {
+          "error": "text_too_long",
+          "message": "Text must contain no more than 10,000 characters."
+        },
+        "status_code": 413,
+        "duration_seconds": 0.00024754198966547847
+      },
+      "reference_record": {
+        "request_id": "e13de2fd-315e-4065-9fda-911bf438a706",
+        "route": "/submit",
+        "reference_duration_seconds": 0.000247583,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.00016564277240980406,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "missing_creator",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class."
+      },
+      "status_code": 400,
+      "output": {
+        "error": "invalid_creator_id",
+        "message": "creator_id must be a nonempty string."
+      },
+      "client_seconds": 0.001117750012781471,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.506043+00:00",
+        "request_id": "4f6c4a4c-fec0-4399-8111-81993174694c",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class.\"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class."
+          }
+        },
+        "output": {
+          "error": "invalid_creator_id",
+          "message": "creator_id must be a nonempty string."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.0001949999714270234
+      },
+      "reference_record": {
+        "request_id": "4f6c4a4c-fec0-4399-8111-81993174694c",
+        "route": "/submit",
+        "reference_duration_seconds": 0.000194958,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.0002152844562592866,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "blank_creator",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class.",
+        "creator_id": "   "
+      },
+      "status_code": 400,
+      "output": {
+        "error": "invalid_creator_id",
+        "message": "creator_id must be a nonempty string."
+      },
+      "client_seconds": 0.0010859579779207706,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.508809+00:00",
+        "request_id": "b6900245-5796-4552-b097-9a429d294a51",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class.\", \"creator_id\": \"   \"}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class.",
+            "creator_id": "   "
+          }
+        },
+        "output": {
+          "error": "invalid_creator_id",
+          "message": "creator_id must be a nonempty string."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.0001747499918565154
+      },
+      "reference_record": {
+        "request_id": "b6900245-5796-4552-b097-9a429d294a51",
+        "route": "/submit",
+        "reference_duration_seconds": 0.000174792,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.00024033218616753262,
+      "log_correct": true,
+      "behavior_matches": true
+    },
+    {
+      "case": "numeric_creator",
+      "input": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class.",
+        "creator_id": 123
+      },
+      "status_code": 400,
+      "output": {
+        "error": "invalid_creator_id",
+        "message": "creator_id must be a nonempty string."
+      },
+      "client_seconds": 0.0013662080164067447,
+      "request_record": {
+        "timestamp": "2026-11-18T05:30:32.511896+00:00",
+        "request_id": "efd6c7e7-245a-4700-842e-173c012b96eb",
+        "route": "/submit",
+        "method": "POST",
+        "input": {
+          "content_type": "application/json",
+          "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class.\", \"creator_id\": 123}",
+          "json": {
+            "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class.",
+            "creator_id": 123
+          }
+        },
+        "output": {
+          "error": "invalid_creator_id",
+          "message": "creator_id must be a nonempty string."
+        },
+        "status_code": 400,
+        "duration_seconds": 0.00028858298901468515
+      },
+      "reference_record": {
+        "request_id": "efd6c7e7-245a-4700-842e-173c012b96eb",
+        "route": "/submit",
+        "reference_duration_seconds": 0.000288666,
+        "method": "Independent perf_counter_ns readings adjacent to the instrumentation's start and stop readings"
+      },
+      "relative_timing_error": 0.0002875675878517834,
+      "log_correct": true,
+      "behavior_matches": true
+    }
+  ],
+  "restart_snapshot": [
+    {
+      "timestamp": "2026-11-18T05:30:31.632233+00:00",
+      "request_id": "1805eb23-caf1-4d3b-9b1f-ed5c3dcdc582",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_1\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.",
+          "creator_id": "capstone-ffe55e9e871e-valid_1"
+        }
+      },
+      "output": {
+        "confidence": 0.6377999999999999,
+        "content_id": "999aeda4-4f76-4d2f-994a-f0bea8bceeee",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6583,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.09548974997596815
+    },
+    {
+      "timestamp": "2026-11-18T05:30:31.730067+00:00",
+      "request_id": "07baad27-7351-4911-93e4-0db3d33a76b4",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 2.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_2\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 2.",
+          "creator_id": "capstone-ffe55e9e871e-valid_2"
+        }
+      },
+      "output": {
+        "confidence": 0.6375500000000001,
+        "content_id": "eb309ad1-2776-4f9d-b558-2ff07a2e6342",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6578,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.09357162495143712
+    },
+    {
+      "timestamp": "2026-11-18T05:30:31.829050+00:00",
+      "request_id": "09a907bd-23bd-43dc-8707-ff68f2ed1dc5",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 3.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_3\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 3.",
+          "creator_id": "capstone-ffe55e9e871e-valid_3"
+        }
+      },
+      "output": {
+        "confidence": 0.6368,
+        "content_id": "502d56c4-8ffa-4644-bcde-43d131a08289",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6563,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.09573754097800702
+    },
+    {
+      "timestamp": "2026-11-18T05:30:31.922765+00:00",
+      "request_id": "e68ff6da-09b0-4732-9db7-9658e70b20f0",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 4.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_4\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 4.",
+          "creator_id": "capstone-ffe55e9e871e-valid_4"
+        }
+      },
+      "output": {
+        "confidence": 0.63625,
+        "content_id": "93dcb74b-557f-4036-a26d-fcdc9943cbf7",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6552,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.09037658298620954
+    },
+    {
+      "timestamp": "2026-11-18T05:30:32.014769+00:00",
+      "request_id": "021153be-ed11-43db-a502-5ccc17b6bc2a",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 5.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_5\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 5.",
+          "creator_id": "capstone-ffe55e9e871e-valid_5"
+        }
+      },
+      "output": {
+        "confidence": 0.63575,
+        "content_id": "c5d9b6b6-bf87-46ec-a7ff-e6a60e087af1",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6542,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.08868995803641155
+    },
+    {
+      "timestamp": "2026-11-18T05:30:32.108667+00:00",
+      "request_id": "45eb8f0c-ebfd-4c87-97c9-402135c4f631",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 6.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_6\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 6.",
+          "creator_id": "capstone-ffe55e9e871e-valid_6"
+        }
+      },
+      "output": {
+        "confidence": 0.6349499999999999,
+        "content_id": "6582024a-62c9-4335-bf07-d7a0d5ecf989",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6526,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.09062454104423523
+    },
+    {
+      "timestamp": "2026-11-18T05:30:32.200975+00:00",
+      "request_id": "08ab91fc-916b-4f21-978f-25b0d8317b5c",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 7.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_7\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 7.",
+          "creator_id": "capstone-ffe55e9e871e-valid_7"
+        }
+      },
+      "output": {
+        "confidence": 0.6345,
+        "content_id": "48cf9ca7-d146-406a-ba9e-41cb10cfb175",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6517,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.0890149159822613
+    },
+    {
+      "timestamp": "2026-11-18T05:30:32.293596+00:00",
+      "request_id": "ed51142c-02bd-4ed0-a566-f70b94e79fdb",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 8.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_8\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 8.",
+          "creator_id": "capstone-ffe55e9e871e-valid_8"
+        }
+      },
+      "output": {
+        "confidence": 0.63445,
+        "content_id": "ea09eec8-5864-4537-9250-d678d4e9b1c7",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6516,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.08928529202239588
+    },
+    {
+      "timestamp": "2026-11-18T05:30:32.388236+00:00",
+      "request_id": "54d4d8f7-8fd9-4fea-b5c4-075d8f5ffefc",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 9.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_9\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 9.",
+          "creator_id": "capstone-ffe55e9e871e-valid_9"
+        }
+      },
+      "output": {
+        "confidence": 0.6345,
+        "content_id": "c43ec0e4-121d-445f-acce-263c2468ef76",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.6517,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.0912898329552263
+    },
+    {
+      "timestamp": "2026-11-18T05:30:32.481193+00:00",
+      "request_id": "ad139e37-7c09-4f96-b1c5-51c5f50c828e",
+      "route": "/submit",
+      "method": "POST",
+      "input": {
+        "content_type": "application/json",
+        "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 10.\", \"creator_id\": \"capstone-ffe55e9e871e-valid_10\"}",
+        "json": {
+          "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 10.",
+          "creator_id": "capstone-ffe55e9e871e-valid_10"
+        }
+      },
+      "output": {
+        "confidence": 0.63515,
+        "content_id": "22d03855-f668-4e36-a947-5695271056f8",
+        "guess": "unsure",
+        "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+        "model_score": 0.653,
+        "style_score": 0.6173
+      },
+      "status_code": 200,
+      "duration_seconds": 0.08948666701326147
+    }
+  ]
+}
