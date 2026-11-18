@@ -123,3 +123,49 @@ I chose a gap of 0.25 because the scores should show a noticeable difference bet
      A number you missed stays where it is, gets diagnosed, and gets a fix
      attempted. That's where the points are.
      ───────────────────────────────────────────────────────────────────────── -->
+
+## Capstone Acceptance Criteria
+
+These criteria were written before collecting capstone evaluation results. Each target must hold in all three trials.
+
+### 1. Complete and accurate request logs
+
+All 10 requests should have five fields logged correctly: timestamp, input, output, HTTP status code, and duration. The timestamp should use a valid UTC format, while the input, output, and status code should match the actual request and response. The logged duration should be within 10% of a separately measured timer covering the same server-side processing interval.
+
+**Why this target:**
+
+These logs help me verify responses, track performance, and investigate errors. My goal is 10 out of 10 requests logged correctly because even one missing or inaccurate log could leave me unable to fully understand what happened.
+
+### 2. Failed requests are logged accurately
+
+When `/submit` rejects invalid input, the log should still record the timestamp, input, error response, HTTP status code, and duration. The error response and status code should accurately reflect why the request failed, and the timestamp should use a valid UTC format. My goal is to correctly log 10 out of 10 failed requests.
+
+The same 10% duration tolerance should apply to failed requests, using a separate timer measuring the same server-side processing interval.
+
+**Why this target:**
+
+Missing failure logs would make it harder to identify invalid inputs, investigate errors, and understand why requests were rejected.
+
+### 3. Logs survive a service restart
+
+All previously recorded log entries should remain available after the service restarts, without any missing, duplicated, or modified records. I would test this by sending 10 requests, checking their logs, restarting the service, and then verifying that all 10 entries are still present and contain the same information.
+
+**Why this target:**
+
+My goal is to preserve 10 out of 10 entries because losing logs after a restart would make it difficult to investigate past requests or errors.
+
+### 4. Warm submissions meet the response-time target
+
+Once the detector is loaded, a valid `/submit` request containing 100–200 words should complete within 2 seconds, measured from the client's end-to-end response time. I would test 10 valid requests in each of three trials, with at least 9 out of 10 meeting the time limit per trial.
+
+**Why this target:**
+
+I think 2 seconds is acceptable because it gives the detector enough time to process the text while keeping the application responsive.
+
+### 5. Logging preserves existing submission behavior
+
+After adding logging, the `/submit` endpoint should continue working the same way as before. I would send the same 10 valid inputs before and after adding logging and compare their detection fields, excluding generated IDs. I would also test 10 invalid inputs to verify that they still return the expected error responses and HTTP status codes.
+
+**Why this target:**
+
+My goal is 20 out of 20 matching results in each of three trials because logging should not affect the detector's existing functionality.
