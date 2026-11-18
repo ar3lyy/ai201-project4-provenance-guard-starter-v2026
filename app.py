@@ -25,6 +25,9 @@ import scoring
 
 app = Flask(__name__)
 
+from request_instrumentation import install_request_logging
+install_request_logging(app)
+
 
 # ── Rate limiting — UNIT 8 ────────────────────────────────────────────────────
 
