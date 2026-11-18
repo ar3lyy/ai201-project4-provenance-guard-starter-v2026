@@ -1,0 +1,29 @@
+{
+  "verification": "Submission processed and logged in clean checkout",
+  "checkout_commit": "964ba36770158f5dc68b000ab0cd95eb18f1c1a9",
+  "model_cache_note": "The clean checkout reused this machine's existing model cache.",
+  "request_record": {
+    "timestamp": "2026-11-18T05:04:16.607562+00:00",
+    "request_id": "50a9b1c9-5d50-4441-98e1-afc826cc26a9",
+    "route": "/submit",
+    "method": "POST",
+    "input": {
+      "content_type": "application/json",
+      "body": "{\"text\": \"Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.\", \"creator_id\": \"clean-check-dbd4c794a3\"}",
+      "json": {
+        "text": "Yesterday I went to the campus library to finish an assignment with a friend. We found a table near the window, but the room was louder than we expected. I started by reading my notes and marking the parts that still confused me. My friend suggested working through one example before trying the whole problem. That helped because I could see where I had skipped an important step. After an hour we took a short break and walked outside for some fresh air. When we returned, I checked my answers again and wrote down two questions to ask during the next class. This was study session number 1.",
+        "creator_id": "clean-check-dbd4c794a3"
+      }
+    },
+    "output": {
+      "confidence": 0.6377999999999999,
+      "content_id": "651ace0d-6081-4e28-b28a-bbb99dacbb70",
+      "guess": "unsure",
+      "label": "Our automated checks cannot confidently determine how this writing was created. This result is not a finding of wrongdoing. You can appeal this decision.",
+      "model_score": 0.6583,
+      "style_score": 0.6173
+    },
+    "status_code": 200,
+    "duration_seconds": 4.874244957987685
+  }
+}

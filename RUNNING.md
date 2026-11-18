@@ -375,5 +375,10 @@ lock does not coordinate multiple processes.
 ### Verification status
 
 Submission, invalid-input, appeal, and simulated detector-failure smoke
-checks passed. Clean-checkout verification and the full three-trial
-acceptance evaluation are still pending.
+checks passed. A fresh local clone with a new virtual environment also
+loaded the detector, started with the documented command, and processed
+and logged a submission. This check reused the machine's existing model
+cache. Evidence is saved in
+`results/capstone/clean_checkout_verification.json`.
+
+The full three-trial acceptance evaluation is still pending.
