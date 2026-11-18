@@ -306,3 +306,74 @@ is evidence, and the entries you paste into your README are what unit 8 grades.
 
 **Do not delete and recreate this repository.** You submit the same URL both
 units.
+
+
+## Capstone — Local Run with Logs
+
+This capstone uses Path B: local with logs.
+
+### Environment
+
+Tested on macOS 15.5, Apple Silicon arm64, using Python 3.13.5.
+
+Installed versions: Flask 3.1.3, Flask-Limiter 3.12, Gunicorn 23.0.0,
+PyTorch 2.15.0, and Transformers 4.57.6.
+
+The full dependency snapshot is saved in
+`results/capstone/environment-lock.txt`.
+
+### Setup from a clean checkout
+
+From the repository root:
+
+```bash
+python3.13 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r results/capstone/environment-lock.txt
+python detector.py
+```
+
+GPT-2 runs locally. The initial model download is approximately 550 MB.
+The exact cached model size has not yet been measured. Internet access
+is needed for the initial package installation and model download.
+
+### Start command
+
+With the virtual environment activated, run:
+
+```bash
+python -m gunicorn app:app --bind 127.0.0.1:5001 --workers 1 --threads 1 --timeout 120
+```
+
+Leave that terminal running. Press Control+C to stop the service.
+
+From another terminal, check:
+
+```bash
+curl -s http://127.0.0.1:5001/health
+```
+
+The first submission loads the model. Warm-request latency tests exclude
+that initial load.
+
+### Logs
+
+- `logs/audit.jsonl`: existing decisions, appeals, and rejections.
+- `logs/requests.jsonl`: request records for `/submit` and `/appeal`.
+- `logs/capstone_failure_smoke.jsonl`: a simulated detector-failure record.
+
+Each request record contains a UTC timestamp, request ID, route, method,
+input, output, HTTP status code, and duration in seconds.
+
+Duration measures processing from the request hook to the response hook.
+It excludes writing the request log and transferring the response to
+the client.
+
+Logs are appended to disk. Use one worker because the writer's thread
+lock does not coordinate multiple processes.
+
+### Verification status
+
+Submission, invalid-input, appeal, and simulated detector-failure smoke
+checks passed. Clean-checkout verification and the full three-trial
+acceptance evaluation are still pending.
