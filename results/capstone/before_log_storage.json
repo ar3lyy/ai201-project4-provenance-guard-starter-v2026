@@ -1,0 +1,23 @@
+{
+  "method": "Actual UTF-8 line sizes including newline, for the 20 evaluation requests per trial",
+  "trials": [
+    {
+      "trial": 1,
+      "records": 20,
+      "total_bytes": 47283,
+      "mean_bytes_per_record": 2364.15
+    },
+    {
+      "trial": 2,
+      "records": 20,
+      "total_bytes": 47280,
+      "mean_bytes_per_record": 2364.0
+    },
+    {
+      "trial": 3,
+      "records": 20,
+      "total_bytes": 47281,
+      "mean_bytes_per_record": 2364.05
+    }
+  ]
+}

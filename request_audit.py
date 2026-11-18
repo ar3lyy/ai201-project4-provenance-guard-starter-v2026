@@ -24,7 +24,7 @@ def write_request(*, request_id, route, method, input_data,
         "duration_seconds": duration_seconds,
     }
 
-    line = json.dumps(entry, ensure_ascii=False, allow_nan=False)
+    line = json.dumps(entry, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
     REQUEST_LOG.parent.mkdir(parents=True, exist_ok=True)
 
     with _lock:
